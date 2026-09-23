@@ -11,6 +11,7 @@
 | [검토 맥락](./agent-builder-platform-context.md) | 현재 회사 환경, 에이전트의 잠정 정의, 기존 논의의 결론과 미해결 질문 |
 | [플랫폼 가치 제안](./agent-builder-platform-proposal.md) | 일반화 가능한 생산성 블로커, Claude 생태계 위에 추가 계층이 필요한 이유, 대표 사례와 추진안 |
 | [비전 및 런타임 설계](./agentic-work-platform-vision.md) | Agent-first·Workflow-backed 원칙, 용어 체계, 추가 도구, Work Definition·Case 중심의 런타임 아키텍처 |
+| [6주 로드맵](./six-week-roadmap.md) | 전사 주간보고 취합 파일럿을 중심으로 한 P0~P2 기능 요구사항, Agent Stage Runner·Tool Gateway·Plugin·라이프사이클 개발 순서 |
 
 ## 핵심 결론
 

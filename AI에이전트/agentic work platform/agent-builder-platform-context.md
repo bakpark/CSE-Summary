@@ -156,6 +156,22 @@
 - Claude Desktop에는 `업무 에이전트 조회`, `Case 시작·조회`, `정보 제공`, `승인`, `취소` 기능을 MCP로 노출한다.
 - 상세 비전과 런타임 설계는 [비전 및 런타임 설계](./agentic-work-platform-vision.md)에 기록했다.
 
+## 6주 파일럿 설계를 위해 확인된 현재 구현
+
+- **CCAB**라는 Claude Code Plugin이 이미 존재한다.
+- CCAB는 이미 등록·연동된 대고객 API 도구를 이용해 에이전트를 만드는 Skill 기반 Workflow다.
+- **Tool Gateway**는 API Spec을 계약으로 등록하고 실제 API를 연동하면 MCP Proxy 호출 표면을 제공하는 단순한 형태로 존재한다.
+- **Agent Stage Runner**는 신규 개발 대상이다. 업무 Workflow의 개별 Stage 실행기가 아니라, CCAB가 생성한 에이전트 코드를 격리 환경에서 실행·검증하는 원격 Build·Staging Runtime Host로 정의한다.
+- Stage Runner의 핵심 필요성은 모든 비개발자에게 GitHub 계정과 로컬 개발환경을 제공하지 않고도 에이전트를 만들고 시험하게 하는 것이다.
+- Stage Runner와 검증된 Release를 실제 반복 업무로 실행하는 Agent Runtime은 논리적으로 분리한다.
+- 첫 파일럿은 **전사 주간보고 취합 에이전트**다. 주간보고 원문은 주로 Agit에 있고, 업무 세부 이력은 Jira에서 확인한다.
+- 파일럿 기본 흐름은 `Agit 보고 수집 → Jira 이력 보완·대조 → 근거가 연결된 초안 생성 → 사람 검토 → Agit 게시`다.
+- 사내에는 **n8n**과 **Lobby**도 존재한다. n8n은 Workflow·시스템 자동화, Lobby는 지식·MCP 기반의 간단한 웹 Agent Builder 역할을 한다.
+- Agentic Work Platform을 “새로운 범용 Builder”로 설명하면 기존 도구와 중복된다. Lobby는 간단한 Agent, n8n은 결정론적 Workflow, CCAB+Stage Runner는 코드·의존성·평가가 필요한 Agent라는 선택 기준을 둔다.
+- Agentic Work Platform의 차별점은 CCAB가 만든 코드형 Agent를 비개발자가 실행·검증하고, Tool·평가·Release·운영 Run을 연결해 조직 자산으로 승격하는 공통 계층이다.
+- 주간보고 파일럿은 n8n·Lobby로 가능한 범위도 동일 기준으로 비교하며, 기존 도구로 충분하면 신규 플랫폼 범위를 줄이는 판단 근거로 사용한다.
+- 6주 계획은 [6주 로드맵](./six-week-roadmap.md)에 기록했다.
+
 ## 참고 자료
 
 - [Anthropic: Building effective agents](https://www.anthropic.com/engineering/building-effective-agents)
