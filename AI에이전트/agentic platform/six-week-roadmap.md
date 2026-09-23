@@ -1,4 +1,4 @@
-# Agentic Work Platform 6주 로드맵
+# Agentic Platform 6주 로드맵 — Work Agent Pilot
 
 문서 상태: 협업용 2차 초안
 작성 기준일: 2026-09-23
@@ -6,7 +6,7 @@
 
 > 이 문서는 6주 안에 범용 플랫폼 전체를 완성하는 계획이 아니다. **CCAB로 비개발자가 에이전트를 만들고, Agent Stage Runner에서 코드를 실행·검증한 뒤, 전사 주간보고 취합 에이전트를 실제로 운영하는 수직 슬라이스**를 완성하는 계획이다.
 
-## 1. 배경과 Agentic Work Platform의 정의·비전
+## 1. 배경과 Agentic Platform의 정의·비전
 
 ### 1.1 현재 상황
 
@@ -21,7 +21,7 @@ Tool Gateway도 이미 존재한다. API Spec을 계약으로 등록하고 실�
 - **n8n**: 여러 시스템의 Trigger와 Action을 연결하고, 정해진 흐름을 시각적으로 자동화하는 Workflow 플랫폼이다. AI Agent, MCP, Human-in-the-loop 같은 기능도 활용할 수 있다.
 - **Lobby**: 사내 지식과 MCP를 이용해 간단한 에이전트를 만들 수 있는 웹 기반 Builder다. 빠르게 만들고 사용할 수 있지만 웹 환경과 제공된 구성 범위 안에서 동작한다.
 
-따라서 Agentic Work Platform의 필요성을 “사내에 에이전트 Builder가 없기 때문”이라고 설명할 수 없다. 핵심 질문은 **기존 도구로 해결되지 않는 어떤 구간을 추가 플랫폼이 담당하는가**다.
+따라서 Agentic Platform의 필요성을 “사내에 에이전트 Builder가 없기 때문”이라고 설명할 수 없다. 핵심 질문은 **기존 도구로 해결되지 않는 어떤 구간을 추가 플랫폼이 담당하는가**다.
 
 ### 1.2 기존 도구와 역할 경계
 
@@ -30,7 +30,7 @@ Tool Gateway도 이미 존재한다. API Spec을 계약으로 등록하고 실�
 | **Lobby** | 지식 조회, 단순 질의응답, 제공된 MCP를 사용하는 간단한 에이전트 | 웹에서 빠르게 구성·사용 | 임의 코드·의존성·테스트가 필요한 에이전트의 Build·검증·Release |
 | **n8n** | 이벤트와 시스템을 정해진 순서로 연결하는 업무 자동화 | Trigger·Action·분기·연동·운영 가시성 | CCAB가 생성한 코드형 에이전트 프로젝트의 격리 실행과 공통 라이프사이클 |
 | **CCAB** | 자연어와 Skill Workflow를 이용한 코드형 에이전트 생성 | 복잡한 로직과 확장 가능한 Agent Project 생성 | 비개발자가 사용할 원격 실행환경, 평가, Release, 운영 연결 |
-| **Agentic Work Platform** | 코드·도구·평가가 필요한 에이전트를 조직 자산으로 완성·운영 | Build·Validation·Lifecycle·Runtime 표준화 | Lobby·n8n을 대체하지 않고 복잡한 에이전트의 공통 기반 제공 |
+| **Agentic Platform** | 코드·도구·평가가 필요한 에이전트를 조직 자산으로 완성·운영 | Build·Validation·Lifecycle·Runtime 표준화 | Lobby·n8n을 대체하지 않고 복잡한 에이전트의 공통 기반 제공 |
 
 업무 유형에 따른 기본 선택 원칙은 다음과 같다.
 
@@ -39,10 +39,10 @@ Tool Gateway도 이미 존재한다. API Spec을 계약으로 등록하고 실�
 정해진 Trigger·분기·시스템 Action           → n8n
 코드·의존성·반복 평가가 필요한 Agent        → CCAB + Agent Stage Runner
 정기 실행·외부 Event 연결                    → n8n이 배포된 Agent를 호출할 수 있음
-공통 Tool·Release·권한·평가                  → Agentic Work Platform
+공통 Tool·Release·권한·평가                  → Agentic Platform
 ```
 
-Agentic Work Platform은 세 번째 범용 Builder를 추가하는 것이 아니다. Lobby와 n8n으로 해결되는 업무는 기존 도구를 계속 사용한다. 새 플랫폼은 **CCAB의 높은 표현력과 조직 운영에 필요한 통제 사이의 공백**을 담당한다.
+Agentic Platform은 세 번째 범용 Builder를 추가하는 것이 아니다. Lobby와 n8n으로 해결되는 업무는 기존 도구를 계속 사용한다. 새 플랫폼은 **CCAB의 높은 표현력과 조직 운영에 필요한 통제 사이의 공백**을 담당한다.
 
 ### 1.3 기존 환경에 남은 공백
 
@@ -58,13 +58,13 @@ Agentic Work Platform은 세 번째 범용 Builder를 추가하는 것이 아니
 
 ### 1.4 플랫폼 정의
 
-> **Agentic Work Platform은 조직의 일하는 방식을 에이전트로 담아내고, 사용자가 어떤 채널에 있든 안전하게 호출하고 실행할 수 있도록 제공하는 AI 업무 실행 기반이다.**
+> **Agentic Platform은 회사의 업무 방식과 서비스 절차를 에이전트로 담아내고, 임직원과 고객이 어떤 채널에 있든 이를 안전하게 호출하고 실행할 수 있도록 제공하는 공통 AI 실행 기반이다.**
 
 에이전트는 사용자에게 보이는 표면이다. 그 안에는 단순한 Prompt가 아니라 업무의 목표, 절차, 판단 기준, 사용할 도구, 사람의 승인 조건과 결과 형식이 담긴다. 에이전트를 만든다는 것은 하나의 챗봇이 아니라 **반복 가능한 Workflow와 일하는 방식을 실행 가능한 형태로 만드는 것**이다.
 
-동일한 에이전트를 특정 웹 화면에 가두지 않고 Claude Desktop, Web, Slack 등 사용자가 실제로 일하는 환경에 공급한다. 초기에는 Claude Desktop을 첫 번째 채널로 삼고 이후 다른 채널로 확장한다.
+사내용 Work Agent는 Claude Desktop, Web, Slack 등 임직원이 일하는 환경에 공급하고, 대고객 Service Agent는 고객 App과 Web, 상담 채널에 공급한다. 현재 6주는 Claude Desktop 기반 Work Agent Pilot에 집중한다.
 
-어떤 채널에서 호출되더라도 사용자와 에이전트의 신원, 허용된 도구와 데이터 범위, 실행 한도, 사람의 승인 조건을 동일하게 적용한다. 이를 통해 에이전트의 사용 채널을 넓히면서도 회사 시스템에 대한 권한은 안전하게 관리한다.
+Work Agent와 Service Agent는 공통 Lifecycle·Tool Gateway·평가 기준을 사용할 수 있지만, 사용자 신원과 데이터, 자격증명, 가용성, 위험 수준이 다르므로 Runtime과 권한 경계를 분리한다. 결제·송금의 실제 정합성과 실행은 기존 도메인 시스템이 보장한다.
 
 ### 1.5 비전
 
@@ -351,7 +351,7 @@ READY 이후 변경 → 기존 Release 수정이 아니라 새 Draft Version 생
 
 ### 3.2 기존 도구 대비 파일럿의 검증 목적
 
-주간보고 취합 자체는 n8n Workflow나 Lobby Agent로 일부 구현할 수 있다. 따라서 단순히 보고서 한 개를 생성하는 것은 Agentic Work Platform의 필요성을 증명하지 못한다.
+주간보고 취합 자체는 n8n Workflow나 Lobby Agent로 일부 구현할 수 있다. 따라서 단순히 보고서 한 개를 생성하는 것은 Agentic Platform의 필요성을 증명하지 못한다.
 
 파일럿은 다음 차이를 함께 검증해야 한다.
 
@@ -365,7 +365,7 @@ READY 이후 변경 → 기존 Release 수정이 아니라 새 Draft Version 생
 
 ```text
 n8n: 매주 Trigger 및 실행 요청
-  → Agentic Work Platform: 검증된 주간보고 Agent Release 실행
+  → Agentic Platform: 검증된 주간보고 Agent Release 실행
       → Tool Gateway: Agit·Jira 호출
   ← 구조화된 보고서와 Evidence 반환
 n8n 또는 담당자: 검토·게시 후속 절차
@@ -410,7 +410,7 @@ n8n 또는 담당자: 검토·게시 후속 절차
 - 검증을 통과한 Release만 파일럿 Runtime에서 실행한다.
 - 같은 Run을 재시도해도 Agit 게시물이 중복 생성되지 않는다.
 - 최소 한 번의 실제 운영 리허설과 담당자 검토를 완료한다.
-- n8n·Lobby로 구현할 수 있는 범위와 Agentic Work Platform이 추가로 제공한 범위를 비교한다.
+- n8n·Lobby로 구현할 수 있는 범위와 Agentic Platform이 추가로 제공한 범위를 비교한다.
 
 ## 4. 기대효과
 
@@ -545,7 +545,7 @@ n8n 또는 담당자: 검토·게시 후속 절차
 - 비개발자가 GitHub·로컬 환경 없이 생성부터 검증까지 완료한다.
 - 담당자가 주간보고 결과의 실제 사용 가능성을 판정한다.
 - 다음 단계에서 확장할 Runner·Lifecycle·Runtime 범위가 결정된다.
-- 기존 도구로 충분한 영역과 Agentic Work Platform이 필요한 영역이 구분된다.
+- 기존 도구로 충분한 영역과 Agentic Platform이 필요한 영역이 구분된다.
 
 ## 6. 작업 스트림
 

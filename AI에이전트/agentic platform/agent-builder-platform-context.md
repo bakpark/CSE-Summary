@@ -154,7 +154,7 @@
 - 기존 Jira·Confluence·Agit·Slack·Google Workspace MCP는 에이전트의 손을 제공한다. 별도로 이벤트, 상태 저장, Queue, Identity·Token, 정책, 승인, 관측성, 평가와 같은 런타임의 신경계가 필요하다.
 - 런타임은 Invocation Gateway, Durable Orchestrator, Agent Executor, Human Task Service, Tool & Policy Gateway, State·Artifact Store, Observability·Evaluation으로 구성한다.
 - Claude Desktop에는 `업무 에이전트 조회`, `Case 시작·조회`, `정보 제공`, `승인`, `취소` 기능을 MCP로 노출한다.
-- 상세 비전과 런타임 설계는 [비전 및 런타임 설계](./agentic-work-platform-vision.md)에 기록했다.
+- 상세 Work Agent 런타임 설계는 [Work Agent 런타임 설계](./work-agent-runtime-vision.md)에 기록했다.
 
 ## 6주 파일럿 설계를 위해 확인된 현재 구현
 
@@ -167,8 +167,8 @@
 - 첫 파일럿은 **전사 주간보고 취합 에이전트**다. 주간보고 원문은 주로 Agit에 있고, 업무 세부 이력은 Jira에서 확인한다.
 - 파일럿 기본 흐름은 `Agit 보고 수집 → Jira 이력 보완·대조 → 근거가 연결된 초안 생성 → 사람 검토 → Agit 게시`다.
 - 사내에는 **n8n**과 **Lobby**도 존재한다. n8n은 Workflow·시스템 자동화, Lobby는 지식·MCP 기반의 간단한 웹 Agent Builder 역할을 한다.
-- Agentic Work Platform을 “새로운 범용 Builder”로 설명하면 기존 도구와 중복된다. Lobby는 간단한 Agent, n8n은 결정론적 Workflow, CCAB+Stage Runner는 코드·의존성·평가가 필요한 Agent라는 선택 기준을 둔다.
-- Agentic Work Platform의 차별점은 CCAB가 만든 코드형 Agent를 비개발자가 실행·검증하고, Tool·평가·Release·운영 Run을 연결해 조직 자산으로 승격하는 공통 계층이다.
+- Agentic Platform을 “새로운 범용 Builder”로 설명하면 기존 도구와 중복된다. Lobby는 간단한 Agent, n8n은 결정론적 Workflow, CCAB+Stage Runner는 코드·의존성·평가가 필요한 Agent라는 선택 기준을 둔다.
+- Agentic Platform의 차별점은 CCAB가 만든 코드형 Agent를 비개발자가 실행·검증하고, Tool·평가·Release·운영 Run을 연결해 조직 자산으로 승격하는 공통 계층이다.
 - 주간보고 파일럿은 n8n·Lobby로 가능한 범위도 동일 기준으로 비교하며, 기존 도구로 충분하면 신규 플랫폼 범위를 줄이는 판단 근거로 사용한다.
 - 6주 계획은 [6주 로드맵](./six-week-roadmap.md)에 기록했다.
 
@@ -179,7 +179,10 @@
 - 초기 사용 채널은 Claude Desktop이며, 이후 Web과 Slack으로 공급 범위를 확장한다.
 - 사용자와 에이전트의 신원을 구분하고, 채널과 무관하게 동일한 Tool 권한·데이터 범위·승인·감사 기준을 적용한다.
 - Lobby·n8n·CCAB를 대체하지 않고, 이들이 만든 업무 실행체를 여러 채널에 안전하게 공급하는 공통 기반을 지향한다.
-- 상세 정의는 [Agentic Work Platform의 정의](./agentic-work-platform-definition.md)에 기록했다.
+- 상위 플랫폼 명칭은 **Agentic Platform**으로 확장한다. 현재 6주 범위는 `Work Agent Pilot`, 향후 대고객 영역은 `Service Agent`로 구분한다.
+- Work Agent와 Service Agent는 Builder·Stage Runner·Registry·Lifecycle·Tool Gateway·평가 기준을 공유하되 Runtime과 권한 경계를 분리한다.
+- Service Agent는 고객 App·Web·상담 채널에서 결제·혜택·송금 서비스를 안내·조율할 수 있다. 실제 거래의 정합성과 실행은 기존 도메인 시스템이 보장한다.
+- 상세 정의는 [Agentic Platform의 정의](./agentic-platform-definition.md)에 기록했다.
 
 ## 참고 자료
 
