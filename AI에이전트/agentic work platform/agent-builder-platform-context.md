@@ -172,6 +172,15 @@
 - 주간보고 파일럿은 n8n·Lobby로 가능한 범위도 동일 기준으로 비교하며, 기존 도구로 충분하면 신규 플랫폼 범위를 줄이는 판단 근거로 사용한다.
 - 6주 계획은 [6주 로드맵](./six-week-roadmap.md)에 기록했다.
 
+## 확장 비전
+
+- 에이전트는 사용자에게 보이는 표면이며, 그 안에는 조직의 목표·절차·판단 기준·도구·권한·승인 조건을 포함한 Workflow와 일하는 방식이 담긴다.
+- 에이전트 정의와 실행을 특정 UI에서 분리해 하나의 에이전트를 Claude Desktop, Web, Slack, API·Workflow 등 여러 채널에서 호출할 수 있게 한다.
+- 초기 사용 채널은 Claude Desktop이며, 이후 Web과 Slack으로 공급 범위를 확장한다.
+- 사용자와 에이전트의 신원을 구분하고, 채널과 무관하게 동일한 Tool 권한·데이터 범위·승인·감사 기준을 적용한다.
+- Lobby·n8n·CCAB를 대체하지 않고, 이들이 만든 업무 실행체를 여러 채널에 안전하게 공급하는 공통 기반을 지향한다.
+- 상세 정의는 [Agentic Work Platform의 정의](./agentic-work-platform-definition.md)에 기록했다.
+
 ## 참고 자료
 
 - [Anthropic: Building effective agents](https://www.anthropic.com/engineering/building-effective-agents)

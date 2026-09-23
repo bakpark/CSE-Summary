@@ -12,6 +12,7 @@
 | [플랫폼 가치 제안](./agent-builder-platform-proposal.md) | 일반화 가능한 생산성 블로커, Claude 생태계 위에 추가 계층이 필요한 이유, 대표 사례와 추진안 |
 | [비전 및 런타임 설계](./agentic-work-platform-vision.md) | Agent-first·Workflow-backed 원칙, 용어 체계, 추가 도구, Work Definition·Case 중심의 런타임 아키텍처 |
 | [6주 로드맵](./six-week-roadmap.md) | 전사 주간보고 취합 파일럿을 중심으로 한 P0~P2 기능 요구사항, Agent Stage Runner·Tool Gateway·Plugin·라이프사이클 개발 순서 |
+| [Agentic Work Platform의 정의](./agentic-work-platform-definition.md) | 조직의 일하는 방식을 에이전트에 담고, Claude Desktop·Web·Slack 등 여러 채널에 안전하게 공급하는 플랫폼 비전 |
 
 ## 핵심 결론
 
