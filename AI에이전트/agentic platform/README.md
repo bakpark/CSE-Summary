@@ -14,6 +14,7 @@
 | [6주 로드맵 — Work Agent Pilot](./six-week-roadmap.md) | 전사 주간보고 취합 파일럿을 중심으로 한 P0~P2 요구사항, Agent Stage Runner·Tool Gateway·Plugin·라이프사이클 개발 순서 |
 | [Agentic Platform의 정의](./agentic-platform-definition.md) | Work Agent와 Service Agent를 Claude Desktop·Web·Slack·고객 App 등 여러 채널에 안전하게 공급하는 플랫폼 비전 |
 | [Agentic Platform 핵심 도식](./architecture-diagrams.md) | 만들기·사용 관점의 플랫폼 구조, Agent 정의와 운영 단계, Prompt만 관리하는 방식과의 차이 |
+| [사내 가치·공존·확장 전략](./platform-value-coexistence-and-expansion.md) | Lobby·n8n·CCAB와의 역할 분담, 선택적 관리 수준, 출구전략과 대고객 Agent 확장 경로 |
 
 ## 핵심 결론
 
