@@ -13,6 +13,7 @@
 | [Work Agent 런타임 설계](./work-agent-runtime-vision.md) | Agent-first·Workflow-backed 원칙, 용어 체계, Work Definition·Case 중심의 사내 업무 런타임 아키텍처 |
 | [6주 로드맵 — Work Agent Pilot](./six-week-roadmap.md) | 전사 주간보고 취합 파일럿을 중심으로 한 P0~P2 요구사항, Agent Stage Runner·Tool Gateway·Plugin·라이프사이클 개발 순서 |
 | [Agentic Platform의 정의](./agentic-platform-definition.md) | Work Agent와 Service Agent를 Claude Desktop·Web·Slack·고객 App 등 여러 채널에 안전하게 공급하는 플랫폼 비전 |
+| [Agentic Platform 핵심 도식](./architecture-diagrams.md) | 만들기·사용 관점의 플랫폼 구조, Agent 정의와 운영 단계, Prompt만 관리하는 방식과의 차이 |
 
 ## 핵심 결론
 
