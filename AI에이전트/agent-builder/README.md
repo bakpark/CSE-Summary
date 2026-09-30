@@ -10,6 +10,7 @@
 |---|---|
 | [Agent Builder의 플랫폼 가치와 대안](./agent-builder-platform-value-and-alternatives.md) | 범용 workflow canvas가 자연어와 코드 사이에서 갖는 한계, Agent Studio·공통 AgentSpec·템플릿·code-first SDK·시각적 inspector 중심의 대안 |
 | [오픈소스 Builder 평가와 선택 이식 전략](./opensource-builder-evaluation.md) | Langflow·Flowise Agentflow·Sim Studio 비교, OSS 선택 기준, UI 이식 경계, 기존 Registry·Credential·Runtime 재사용 원칙, 캔버스 수요 확인 후 수행할 기술 스파이크 |
+| [Flowise 자연어 Agent Builder 프로토타입](./prototype/README.md) | 항상 열려 있는 Flowise 캔버스, 자연어 초안·수정, ReAct 그래프 편집, 모델 선택, 입출력 계약 기반 Function 노드를 어떻게 실행하는가? |
 
 ## 핵심 결정
 
