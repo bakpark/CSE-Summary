@@ -6,16 +6,18 @@
 
 ## 1. 판단 요약
 
-이번 과제는 **오픈소스 Builder를 사내에 그대로 설치하는 일**이 아니다. 필요한 것은 캔버스·노드·속성 패널·검증·변수 선택·실행 상태 표시 같은 편집 경험이며, 저장·Registry·Credential·권한·실행·배포는 기존 플랫폼 체계를 그대로 사용한다.
+이번 과제는 **오픈소스 Builder를 사내에 그대로 설치하는 일**이 아니다. 사용자 가치가 확인된 범위에서 캔버스·노드·속성 패널·검증·변수 선택·실행 상태 표시 같은 경험을 선택적으로 활용하고, 저장·Registry·Credential·권한·실행·배포는 기존 플랫폼 체계를 그대로 사용한다.
 
-첫 PoC는 **Flowise `@flowiseai/agentflow`의 선택 이식 가능성 검증**으로 시작한다. 완제품 프런트엔드에서 편집기를 분리하는 대신 이미 embeddable React component 형태로 나뉘어 있어 가장 짧은 경로로 핵심 가설을 확인할 수 있기 때문이다. 다만 공식 저장소는 2026-08-13부터 보관 상태이며, 패키지 메타데이터는 `0.0.0-dev.14`, README의 상태 표시는 아직 `0.0.0-dev.13`이다. 따라서 다음 조건을 붙인다. [1][f1] [2][f2] [3][f3]
+선행 판단은 **범용 캔버스가 실제 사용자 문제의 우선순위인지 검증하는 것**이다. 간단한 Agent는 자연어·template·form으로, 복잡한 Agent는 code-first SDK와 coding agent로 만드는 편이 적합할 수 있다. 자세한 판단은 [Agent Builder의 플랫폼 가치와 대안](./agent-builder-platform-value-and-alternatives.md)에서 다룬다.
+
+그 검증을 통과해 캔버스 선택 이식이 필요하다면, 첫 기술 스파이크는 Flowise `@flowiseai/agentflow`로 수행할 수 있다. 완제품 프런트엔드에서 편집기를 분리하는 대신 이미 embeddable React component 형태로 나뉘어 있기 때문이다. 다만 공식 저장소는 2026-08-13부터 보관 상태이며, 패키지 메타데이터는 `0.0.0-dev.14`, README의 상태 표시는 아직 `0.0.0-dev.13`이다. 따라서 다음 조건을 붙인다. [1][f1] [2][f2] [3][f3]
 
 - npm 패키지를 계속 따라가는 운영 의존성으로 바로 채택하지 않는다.
 - 검토한 commit을 고정하고, 필요한 코드를 fork 또는 vendor하여 내부 소유 경계를 만든다.
 - Flowise 서버 없이 편집·직렬화·복원이 가능한지를 PoC의 첫 통과 조건으로 삼는다.
 - 통과하지 못하면 Sim Studio의 편집기 구조와 Langflow의 성숙한 캔버스를 같은 계약으로 비교한다.
 
-Sim Studio는 현대적인 콘솔 UX와 디자인 시스템 적용 방식을 참고할 2순위 후보이고, Langflow는 기능 성숙도와 대체 구현 경로를 확인할 3순위 후보이다. **Flowise를 코드 기반, Sim Studio를 UX 참고안으로 조합하되 어느 제품의 저장 형식이나 런타임도 플랫폼 표준으로 채택하지 않는 것**이 기본 제안이다.
+Sim Studio는 현대적인 콘솔 UX와 디자인 시스템 적용 방식을 참고할 활성 후보이고, Langflow는 기능 성숙도와 대체 구현 경로를 확인할 후보이다. **Flowise를 장기 제품 기반이 아니라 고정된 코드 snapshot의 추출 실험으로 한정하고, 어느 제품의 저장 형식이나 런타임도 플랫폼 표준으로 채택하지 않는 것**이 기본 제안이다.
 
 ## 2. 선택 기준
 
@@ -36,7 +38,7 @@ Sim Studio는 현대적인 콘솔 UX와 디자인 시스템 적용 방식을 참
 
 | 후보 | 공식 코드에서 확인한 구조 | 라이선스 범위 | 선택 이식 적합도 | 주요 장점 | 주요 위험과 판단 |
 |---|---|---|---:|---|---|
-| **Flowise Agentflow** | React + ReactFlow + MUI 기반의 별도 embeddable package. 초기 데이터·변경·저장 callback, validation/export, async option, variable picker, 실행 상태, read-only, custom rendering 제공 [2][f2] | package는 Apache-2.0. 루트 저장소의 enterprise 경로·명시 파일은 별도 조건이므로 전이 파일 확인 필요 [3][f3] [8][f4] | **높음** | 편집기 단위의 출발점이 이미 존재하여 PoC가 가장 직접적 | 저장소 보관 상태, dev API, Flowise API endpoint 전제, 자체 theme token이 남아 있음. **조건부 1순위 PoC** |
+| **Flowise Agentflow** | React + ReactFlow + MUI 기반의 별도 embeddable package. 초기 데이터·변경·저장 callback, validation/export, async option, variable picker, 실행 상태, read-only, custom rendering 제공 [2][f2] | package는 Apache-2.0. 루트 저장소의 enterprise 경로·명시 파일은 별도 조건이므로 전이 파일 확인 필요 [3][f3] [8][f4] | **높음** | 편집기 단위의 출발점이 이미 존재하여 기술 검증이 가장 직접적 | 저장소 보관 상태, dev API, Flowise API endpoint 전제, 자체 theme token이 남아 있음. **수요 확인 후 추출 스파이크** |
 | **Sim Studio** | Next.js App Router, ReactFlow, Zustand, shadcn, Tailwind 기반의 전체 애플리케이션 [4][s1] | Apache-2.0 [5][s2] | 중상 | 현대적인 노드·도구 선택·레이아웃·실행 UX와 사내 디자인 시스템 참고에 유리 | workflow persistence, auth, realtime 등 제품 계층에서 편집기를 분리해야 함. **UX 참고 및 2순위 코드 스파이크** |
 | **Langflow** | React 19 + TypeScript + Vite, Zustand, `@xyflow/react` 프런트엔드와 Python/FastAPI 실행 계층 [6][l1] | MIT [7][l2] | 중간 | 성숙한 캔버스·컴포넌트 생태계와 허용적인 라이선스 | 노드 정의·Python 컴포넌트 갱신·실행 API 결합을 직접 끊어야 함. **대체안과 기능 벤치마크** |
 
@@ -140,9 +142,9 @@ Credential은 제작자의 PAT를 공유 에이전트에 묶지 않는다. 정�
 
 가져온 코드는 원본 commit·파일 경로·라이선스 고지·내부 수정 이유를 기록한다. upstream 전체 병합은 목표로 삼지 않고, 필요한 보안 수정과 편집기 개선만 선별 반영한다. Flowise의 루트 라이선스는 일부 enterprise 경로와 명시적으로 제한된 파일을 상업 라이선스로 구분하므로, `packages/agentflow`와 실제 전이 의존 파일의 적용 라이선스를 파일 단위로 다시 확인한다. [3][f3] [8][f4]
 
-## 8. 조건부 Flowise 우선 PoC
+## 8. 사용자 가치 검증 후 수행하는 조건부 Flowise 스파이크
 
-PoC는 예쁜 데모가 아니라 **선택 이식의 경계와 소유 비용을 증명하는 시험**이다.
+범용 캔버스를 먼저 만들지 않는다. 공통 AgentSpec, 자연어 Composer, template·form, code-first 등록, 평가·실행 trace를 우선 제공하고도 직접 graph 편집 수요가 남는지 확인한다. 수요가 확인되면 PoC는 예쁜 데모가 아니라 **선택 이식의 경계와 소유 비용을 증명하는 시험**으로 수행한다.
 
 | 단계 | 작업 | 통과 기준 |
 |---|---|---|
@@ -175,16 +177,16 @@ Sim Studio 스파이크에서는 `apps/sim`의 canvas·block·panel 경계와 sh
 
 ## 10. 최종 제안
 
-Agent Builder는 **플랫폼의 새 시각적 제작 채널**로 정의한다. OSS는 Editor Core의 출발점과 UX 참고자료이며, 플랫폼의 저장·관리·권한·실행 체계를 대체하지 않는다.
+Agent Builder는 **Agent Studio의 선택적 시각화·편집 채널**로 정의한다. 우선 투자 대상은 공통 AgentSpec과 Registry, 자연어·template·form, code-first SDK, 평가·승인·배포·trace다. OSS는 직접 graph 편집의 사용자 가치가 확인되었을 때 Editor Core의 출발점과 UX 참고자료로 사용하며, 플랫폼의 저장·관리·권한·실행 체계를 대체하지 않는다.
 
 실행 순서는 다음과 같다.
 
-1. Flowise `@flowiseai/agentflow`를 고정된 source snapshot으로 가져와 백엔드 없는 편집기와 Adapter 교체 가능성을 먼저 검증한다.
-2. Sim Studio의 node·tool 선택·layout·run/debug UX를 참고하여 사내 디자인 시스템으로 다시 입힌다.
-3. 기존 Agent·Model·Tool·Knowledge Registry, Credential Store, Runtime, version·deployment 계약만 연결한다.
-4. PoC 통과 여부를 변경량·round-trip·보안·유지보수 기준으로 결정하고, 실패하면 같은 계약으로 Sim Studio와 Langflow를 비교한다.
+1. 공통 AgentSpec과 기존 Agent·Model·Tool·Knowledge Registry, Credential Store, Runtime, version·deployment 계약을 먼저 확정한다.
+2. 자연어·template·form과 code-first 경로로 핵심 제작 수요를 제공하고, 구조·실행은 viewer와 trace로 보여 준다.
+3. 제한적 graph 편집 수요가 확인되면 Flowise `@flowiseai/agentflow`를 고정된 source snapshot으로 가져와 백엔드 없는 편집기와 Adapter 교체 가능성을 검증한다.
+4. Sim Studio의 node·tool 선택·layout·run/debug UX를 참고하고, 통과 여부를 변경량·round-trip·보안·유지보수 기준으로 결정한다.
 
-따라서 **Flowise 우선은 운영 제품 선정이 아니라 가장 빠른 가설 검증 순서**다. 저장소 보관 상태를 감안하면 장기 채택의 전제는 fork/vendor한 코드와 테스트를 내부에서 소유할 수 있다는 판단이며, 그 책임을 수용할 수 없으면 활성 upstream을 가진 후보 또는 최소 Editor Core 재구현으로 전환한다.
+따라서 **Flowise는 전략의 출발점이 아니라, 캔버스 필요성이 확인된 뒤 수행할 가장 직접적인 추출 실험 후보**다. 저장소 보관 상태를 감안하면 장기 채택의 전제는 fork/vendor한 코드와 테스트를 내부에서 소유할 수 있다는 판단이며, 그 책임을 수용할 수 없으면 활성 upstream을 가진 후보 또는 최소 Editor Core 재구현으로 전환한다.
 
 ---
 

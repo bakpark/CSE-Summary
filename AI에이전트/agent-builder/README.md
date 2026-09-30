@@ -8,13 +8,14 @@
 
 | 문서 | 읽을 내용 |
 |---|---|
-| [오픈소스 Builder 평가와 선택 이식 전략](./opensource-builder-evaluation.md) | Langflow·Flowise Agentflow·Sim Studio 비교, OSS 선택 기준, UI 이식 경계, 기존 Registry·Credential·Runtime 재사용 원칙, 조건부 Flowise 우선 PoC |
+| [Agent Builder의 플랫폼 가치와 대안](./agent-builder-platform-value-and-alternatives.md) | 범용 workflow canvas가 자연어와 코드 사이에서 갖는 한계, Agent Studio·공통 AgentSpec·템플릿·code-first SDK·시각적 inspector 중심의 대안 |
+| [오픈소스 Builder 평가와 선택 이식 전략](./opensource-builder-evaluation.md) | Langflow·Flowise Agentflow·Sim Studio 비교, OSS 선택 기준, UI 이식 경계, 기존 Registry·Credential·Runtime 재사용 원칙, 캔버스 수요 확인 후 수행할 기술 스파이크 |
 
 ## 핵심 결정
 
-Agent Builder를 별도 플랫폼이나 두 번째 실행 원장으로 만들지 않는다. 캔버스·노드·속성 패널·검증·실행 상태 표현은 독립적인 편집기 모듈로 구성하고, 에이전트 정의와 편집 메타데이터는 기존 플랫폼 저장·버전 체계에 보관한다.
+플랫폼의 중심을 범용 Visual Agent Builder가 아니라 **Agent Studio와 공통 AgentSpec lifecycle**로 둔다. 자연어·템플릿·설정 폼·코드가 같은 정의와 Registry로 수렴하게 하고, 캔버스는 구조 확인·실행 추적·디버깅·제한적 workflow 편집에 우선 사용한다.
 
-Flowise의 `@flowiseai/agentflow`를 첫 추출 PoC 대상으로 삼되 특정 커밋에 고정한다. 해당 저장소가 보관 상태이고 패키지가 dev 단계이므로 지속 업데이트되는 운영 의존성으로 바로 채택하지 않는다. Sim Studio는 UX와 디자인 구조의 주요 참고안, Langflow는 성숙한 기능과 대체 구현 경로의 비교 기준으로 사용한다.
+범용 캔버스의 사용자 가치가 확인되기 전에는 Flowise 포팅을 선행하지 않는다. 필요할 경우 `@flowiseai/agentflow`는 특정 commit을 고정한 추출 실험 대상으로만 사용한다. 해당 저장소가 보관 상태이고 패키지가 dev 단계이므로 지속 업데이트되는 운영 의존성으로 채택하지 않는다. Sim Studio와 Langflow 역시 공통 정의·평가·운영 기능을 대신하지 않는 UI 참고 후보로 한정한다.
 
 ## 관련 문서
 
