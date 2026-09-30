@@ -12,6 +12,7 @@
 | [Request-scoped 프로필과 분산 런타임](./distributed-request-scoped-runtime.md) | 이미 실행 중인 여러 워커가 서로 다른 프로필의 요청을 어떻게 처리하는가? 세션 격리, 동시성, 재시도, 중단·재개와 배포는 어떻게 설계하는가? |
 | [Deep Agents 구현 가이드](./deepagents-request-profile-implementation.md) | Runtime Context와 미들웨어로 모델·프롬프트·도구를 어떻게 연결하는가? 동적 설정의 한계와 검증 항목은 무엇인가? |
 | [Agent Runtime Platform 아키텍처·테크스펙](./agent-runtime-platform/README.md) | 대고객 서빙을 위한 Runtime·Playground·Tool Gateway, 제품 벤치마크, 동적 프로필·수용 규모·제어권, 계약·구현 방향과 MVP를 어떻게 정의하는가? |
+| [Agent Builder 오픈소스 평가와 선택 이식 전략](./agent-builder/README.md) | Langflow·Flowise Agentflow·Sim Studio 중 어떤 편집기 기반을 선택하고, UI만 내재화하면서 기존 Registry·Credential·Runtime을 어떻게 재사용하는가? |
 | [Agentic Platform 비전](./agentic%20platform/README.md) | 사내용 Work Agent와 대고객 Service Agent를 여러 채널에 안전하게 공급하는 공통 플랫폼의 정의, 6주 파일럿과 런타임을 어떻게 설계하는가? |
 
 ## 설계 결론
