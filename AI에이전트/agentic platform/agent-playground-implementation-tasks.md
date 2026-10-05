@@ -5,6 +5,7 @@
 > 작성일: 2026-10-05. 수정일: 2026-10-06.
 > 기준 문서: [Builder MVP 설계](agent-builder-design.md), [Definition MVP 설계](agent-definition-design.md), [Stage Runner MVP 설계](agent-stage-runner-design.md).
 > 사용자 관점 참고: [사용자 시나리오](agent-playground-user-scenarios.md).
+> 제작 순서와 담당 구간: [에이전트 제작 라이프사이클](agent-playground-lifecycle.md).
 
 **편집 저장 → 소스 버전 고정 → Jenkins 빌드·검증 → Nexus Agent JAR 등록 → Stage Runner 반영**을 MVP 필수 경로로 한다. Runner와 적용 서비스는 같은 등록 JAR와 SDK를 사용한다. 빌드 중 기존 대화를 유지하며 새 버전은 수정본 테스트에서 빈 세션으로 전환한다. 파일럿 작업은 별도 묶음이다.
 
