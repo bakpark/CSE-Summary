@@ -1,0 +1,24 @@
+flowchart LR
+    subgraph S[실제 서비스 형상]
+        direction TB
+        G[서비스 저장소]
+        L[개발자 로컬<br/>실제 서비스 프로젝트]
+        A[변경 검토 · 선택 반영<br/>서비스 테스트 · 기존 검토·배포]
+        G -->|체크아웃과 개발| L
+        L -->|같은 로컬 유지| A
+        A -.->|기존 형상관리| G
+    end
+    I[Plugin 형상 import<br/>Spec · 필요 소스 · 고정 의존성<br/>출처와 파일 대응 기록]
+    D[Plugin 변경점 공유<br/>기준 I1과 선정 E1의 차이<br/>변경 전후 값 · 평가 근거]
+    subgraph P[Playground 형상 · KPAP 별도 GitHub 저장소]
+        direction TB
+        B[가져온 기준 형상 I1]
+        E[실험 형상 E1<br/>기획자 · AI 엔지니어<br/>Runner와 평가]
+        N[다음 import는 새 기준 I2<br/>기존 실험과 이력 보존]
+        B -->|독립 형상으로 실험| E
+    end
+    L --> I
+    I --> B
+    I -.->|기준 import| D
+    E -->|선정 실험| D
+    D -->|현재 로컬에서 검토와 선택 적용| A
