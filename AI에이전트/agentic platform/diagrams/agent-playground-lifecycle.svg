@@ -1,17 +1,17 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1700" height="1070" viewBox="0 0 1700 1070" role="img" aria-labelledby="title desc">
-<title id="title">독립된 서비스 형상과 Playground 형상</title>
+<title id="title">서비스 형상과 Playground 협업 공간</title>
 <desc id="desc">서비스 저장소의 개발자 로컬에서 plugin을 통해 에이전트 묶음을 Playground로 가져온다. KPAP 별도 GitHub 저장소에서 기준 형상과 실험을 관리한다. 기준 import와 선정 실험의 차이 및 평가 근거를 개발자에게 공유한다. 개발자는 실제 프로젝트 로컬에서 선택 반영하고 검증한다.</desc>
 <defs>
 <marker id="blue" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0 0 L10 5 L0 10 Z" fill="#2b648f"/></marker>
 <marker id="amber" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0 0 L10 5 L0 10 Z" fill="#946824"/></marker>
 <marker id="grey" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0 0 L10 5 L0 10 Z" fill="#66788a"/></marker>
 </defs><rect width="1700" height="1070" fill="white"/>
-<text x="64" y="59" font-family="Arial, Apple SD Gothic Neo, sans-serif" font-size="34" font-weight="700" text-anchor="start" fill="#192d42">Agent Playground · 두 형상과 Plugin 교환 흐름</text>
-<text x="64" y="102" font-family="Arial, Apple SD Gothic Neo, sans-serif" font-size="24" font-weight="400" text-anchor="start" fill="#51677b">개발자 로컬은 실제 서비스 프로젝트다. Playground는 별도 형상으로 실험한다.</text>
+<text x="64" y="59" font-family="Arial, Apple SD Gothic Neo, sans-serif" font-size="34" font-weight="700" text-anchor="start" fill="#192d42">Agent Playground · 플로우 개선 협업 공간</text>
+<text x="64" y="102" font-family="Arial, Apple SD Gothic Neo, sans-serif" font-size="24" font-weight="400" text-anchor="start" fill="#51677b">기획자·AI 엔지니어·개발자는 같은 플로우와 평가 근거로 개선안을 검토한다.</text>
 <rect x="64" y="150" width="520" height="790" rx="16" fill="#f1f5fa" stroke="#c9d8e7" stroke-width="1.5"/>
 <rect x="1070" y="150" width="580" height="790" rx="16" fill="#eef7f4" stroke="#c4dbd1" stroke-width="1.5"/>
 <text x="90" y="190" font-family="Arial, Apple SD Gothic Neo, sans-serif" font-size="25" font-weight="700" text-anchor="start" fill="#192d42">실제 서비스 형상</text>
-<text x="1100" y="190" font-family="Arial, Apple SD Gothic Neo, sans-serif" font-size="24" font-weight="700" text-anchor="start" fill="#192d42">Playground 형상 · KPAP 별도 GitHub 저장소</text>
+<text x="1100" y="190" font-family="Arial, Apple SD Gothic Neo, sans-serif" font-size="24" font-weight="700" text-anchor="start" fill="#192d42">Playground 협업 공간</text>
 <text x="640" y="190" font-family="Arial, Apple SD Gothic Neo, sans-serif" font-size="23" font-weight="700" text-anchor="start" fill="#192d42">Plugin · import와 변경점 공유</text>
 <polyline points="320,350 320,435" fill="none" stroke="#66788a" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#grey)"/>
 <polyline points="550,500 602,500 602,378 640,378" fill="none" stroke="#2b648f" stroke-width="2.5" stroke-linejoin="round" marker-end="url(#blue)"/>
@@ -40,7 +40,7 @@
 <text x="112" y="850" font-family="Arial, Apple SD Gothic Neo, sans-serif" font-size="21" font-weight="400" text-anchor="start" fill="#43576b">서비스 테스트 · 기존 검토·배포</text>
 <rect x="640" y="288" width="330" height="180" rx="12" fill="#edf3fb" stroke="#a8bfd5" stroke-width="1.5"/>
 <rect x="641" y="304" width="4" height="148" rx="2" fill="#2b648f" stroke="none" stroke-width="1.5"/>
-<text x="662" y="326" font-family="Arial, Apple SD Gothic Neo, sans-serif" font-size="25" font-weight="700" text-anchor="start" fill="#192d42">① 형상 import</text>
+<text x="662" y="326" font-family="Arial, Apple SD Gothic Neo, sans-serif" font-size="25" font-weight="700" text-anchor="start" fill="#192d42">① 공통 bundle import</text>
 <text x="662" y="363" font-family="Arial, Apple SD Gothic Neo, sans-serif" font-size="21" font-weight="400" text-anchor="start" fill="#43576b">Spec · 필요 소스 · 의존성</text>
 <text x="662" y="393" font-family="Arial, Apple SD Gothic Neo, sans-serif" font-size="21" font-weight="400" text-anchor="start" fill="#43576b">출처와 정확한 내용 기록</text>
 <text x="662" y="423" font-family="Arial, Apple SD Gothic Neo, sans-serif" font-size="21" font-weight="400" text-anchor="start" fill="#43576b">원래 파일 위치 대응</text>
@@ -48,19 +48,19 @@
 <rect x="641" y="696" width="4" height="173" rx="2" fill="#946824" stroke="none" stroke-width="1.5"/>
 <text x="662" y="718" font-family="Arial, Apple SD Gothic Neo, sans-serif" font-size="25" font-weight="700" text-anchor="start" fill="#192d42">② 변경점 공유</text>
 <text x="662" y="755" font-family="Arial, Apple SD Gothic Neo, sans-serif" font-size="21" font-weight="400" text-anchor="start" fill="#43576b">기준 I1 ↔ 선정 E1 비교</text>
-<text x="662" y="785" font-family="Arial, Apple SD Gothic Neo, sans-serif" font-size="21" font-weight="400" text-anchor="start" fill="#43576b">설정 변경 전·후 값</text>
+<text x="662" y="785" font-family="Arial, Apple SD Gothic Neo, sans-serif" font-size="21" font-weight="400" text-anchor="start" fill="#43576b">노드·연결·분기·설정 차이</text>
 <text x="662" y="815" font-family="Arial, Apple SD Gothic Neo, sans-serif" font-size="21" font-weight="400" text-anchor="start" fill="#43576b">평가 결과와 실행 기록</text>
-<text x="662" y="845" font-family="Arial, Apple SD Gothic Neo, sans-serif" font-size="21" font-weight="400" text-anchor="start" fill="#43576b">실제 파일의 대응 위치</text>
+<text x="662" y="845" font-family="Arial, Apple SD Gothic Neo, sans-serif" font-size="21" font-weight="400" text-anchor="start" fill="#43576b">기준·선정 snapshot과 파일 대응</text>
 <rect x="1110" y="225" width="500" height="125" rx="12" fill="#e3f1eb" stroke="#9dbfac" stroke-width="1.5"/>
 <rect x="1111" y="241" width="4" height="93" rx="2" fill="#2a785d" stroke="none" stroke-width="1.5"/>
 <text x="1132" y="263" font-family="Arial, Apple SD Gothic Neo, sans-serif" font-size="25" font-weight="700" text-anchor="start" fill="#192d42">가져온 기준 형상 I1</text>
-<text x="1132" y="300" font-family="Arial, Apple SD Gothic Neo, sans-serif" font-size="21" font-weight="400" text-anchor="start" fill="#43576b">Agent 묶음을 자체 저장소에 고정</text>
+<text x="1132" y="300" font-family="Arial, Apple SD Gothic Neo, sans-serif" font-size="21" font-weight="400" text-anchor="start" fill="#43576b">공통 플로우와 구성 요소를 고정</text>
 <text x="1132" y="330" font-family="Arial, Apple SD Gothic Neo, sans-serif" font-size="21" font-weight="400" text-anchor="start" fill="#43576b">서비스 커밋과 Playground 커밋 구분</text>
 <rect x="1110" y="435" width="500" height="180" rx="12" fill="#fff" stroke="#9dbfac" stroke-width="1.5"/>
 <rect x="1111" y="451" width="4" height="148" rx="2" fill="#2a785d" stroke="none" stroke-width="1.5"/>
-<text x="1132" y="473" font-family="Arial, Apple SD Gothic Neo, sans-serif" font-size="25" font-weight="700" text-anchor="start" fill="#192d42">실험 형상 E1 · Runner · 평가</text>
+<text x="1132" y="473" font-family="Arial, Apple SD Gothic Neo, sans-serif" font-size="25" font-weight="700" text-anchor="start" fill="#192d42">플로우 수정 · Runner · 평가</text>
 <text x="1132" y="510" font-family="Arial, Apple SD Gothic Neo, sans-serif" font-size="21" font-weight="400" text-anchor="start" fill="#43576b">기획자 · AI 엔지니어</text>
-<text x="1132" y="540" font-family="Arial, Apple SD Gothic Neo, sans-serif" font-size="21" font-weight="400" text-anchor="start" fill="#43576b">허용 설정 변경과 실험 이력 저장</text>
+<text x="1132" y="540" font-family="Arial, Apple SD Gothic Neo, sans-serif" font-size="21" font-weight="400" text-anchor="start" fill="#43576b">노드·연결·분기·설정 직접 편집</text>
 <text x="1132" y="570" font-family="Arial, Apple SD Gothic Neo, sans-serif" font-size="21" font-weight="400" text-anchor="start" fill="#43576b">평가 근거를 정확한 실험 형상에 연결</text>
 <rect x="1110" y="745" width="500" height="150" rx="12" fill="#e3f1eb" stroke="#9dbfac" stroke-width="1.5"/>
 <rect x="1111" y="761" width="4" height="118" rx="2" fill="#2a785d" stroke="none" stroke-width="1.5"/>
