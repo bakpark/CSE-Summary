@@ -15,6 +15,7 @@
 | [Agent Builder·Agent Studio 전략](./agent-builder/README.md) | 범용 시각적 Builder는 여전히 가치가 있는가? 자연어·템플릿·코드 제작 채널과 공통 AgentSpec·Registry·Credential·Runtime을 어떻게 결합하는가? |
 | [Agentic Platform 비전](./agentic%20platform/README.md) | 사내용 Work Agent와 대고객 Service Agent를 여러 채널에 안전하게 공급하는 공통 플랫폼의 정의, 6주 파일럿과 런타임을 어떻게 설계하는가? |
 | [Langfuse v3·v4 업그레이드 검토](./observability/langfuse-v3-v4-upgrade-review.md) | 관측·평가 API 백엔드로 쓸 때 v4 전환이 필요한 이유와 보류 조건은 무엇인가? API·화면 차이, 배포 제약과 전환 기준을 어떻게 판단하는가? |
+| [kpap 상세 기획](./kpap/README.md) | 서비스 SDK, 개발 Plugin, Playground 설정·평가·분석과 Langfuse v3 연동을 어떻게 구성하는가? |
 
 ## 설계 결론
 
