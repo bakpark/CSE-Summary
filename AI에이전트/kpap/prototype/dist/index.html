@@ -1,0 +1,10 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>kpap · Agent Playground</title><link rel="stylesheet" href="style.css"></head>
+<body>
+<div class="shell">
+<aside class="sidebar"><a class="brand" href="#overview"><span class="brand-mark">k</span> kpap<span class="brand-sub">WORKSPACE</span></a><div class="project"><span class="eyebrow">PROJECT</span><strong>고객 서비스 플랫폼</strong><span>AI Service Engineering</span></div><div class="nav-label">AGENT WORKSPACE</div><nav aria-label="주 메뉴" id="nav"></nav><div class="side-bottom"><span class="status-dot"></span> 모의 데이터 환경<button class="text-button" data-action="reset">데모 초기화</button><small>SDK · A2A · Langfuse v3</small></div></aside>
+<div class="workspace"><header class="topbar"><div class="breadcrumb">Workspace <span>/</span> <strong id="agent-label">고객 지원 에이전트</strong></div><div class="top-actions"><label class="sr-only" for="agent-select">에이전트</label><select id="agent-select"><option value="support">고객 지원 에이전트</option><option value="knowledge">사내 지식 에이전트</option></select><label class="sr-only" for="environment">환경</label><select id="environment"><option value="staging">Staging</option><option value="production">Production</option></select><span class="avatar" aria-label="사용자">박</span></div></header>
+<div class="prototype-bar"><span>INTERACTIVE PROTOTYPE</span> 실제 모델 호출·평가·Langfuse API는 연결하지 않았습니다. 변경은 이 브라우저에 저장됩니다.</div><main id="main" tabindex="-1"></main><footer>kpap Agent Playground <span>설정부터 운영 품질까지, 하나의 실행 문맥</span></footer></div>
+</div>
+<dialog id="modal"><div id="modal-content"></div></dialog><div id="toast" role="status" aria-live="polite"></div><script src="app.js"></script>
+</body></html>

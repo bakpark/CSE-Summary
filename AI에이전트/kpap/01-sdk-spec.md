@@ -46,7 +46,7 @@ Python은 동기·비동기 클라이언트를 제공한다. Java 네트워크 �
 | 피드백 | feedback.submit(run_id, feedback) | feedback().submit(runId, feedback) |
 | 종료 | flush(), close() | flush(), close() |
 
-RunContext는 run_id, snapshot_id, 실제 코드 버전, 바인딩 자원, deadline, trace 문맥을 가진다. ctx.model/prompt/tool/knowledge는 확정 자원 핸들을 반환한다. 자원을 검색하지 않는다.
+RunContext는 run_id, snapshot_id, 코드·노드 정의 버전, 바인딩 자원, deadline, trace 문맥을 가진다. ctx.node(node_id)는 해당 노드의 확정 설정과 추적 문맥을 제공한다. ctx.model/prompt/tool/knowledge는 확정 자원 핸들을 반환한다. 자원을 검색하지 않는다.
 
 응답은 업무 출력·상태·오류·사용량·자원 버전·호출 ID를 제공한다. 없는 사용량·비용은 unknown으로 기록한다.
 
