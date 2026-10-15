@@ -1,0 +1,440 @@
+<?xml version='1.0' encoding='utf-8'?>
+<mxfile host="app.diagrams.net" type="device" version="24.7.17">
+  <diagram id="1" name="01 실행 아키텍처">
+    <mxGraphModel grid="1" gridSize="10" page="1" pageWidth="1800" pageHeight="1200" background="#FFFFFF">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title" value="KPAP Agent Playground · 에이전트 실행 아키텍처" vertex="1" parent="1" style="text;html=0;whiteSpace=wrap;align=left;verticalAlign=middle;spacing=0;fontFamily=Arial;fontSize=32;fontColor=#172B4D;fontStyle=1;">
+          <mxGeometry x="40" y="25" width="1700" height="55" as="geometry" />
+        </mxCell>
+        <mxCell id="sub" value="설계안  |  에이전트가 실행 흐름을 제어하고, SDK를 통해 KPAP 공통 기능을 호출한다." vertex="1" parent="1" style="text;html=0;whiteSpace=wrap;align=left;verticalAlign=middle;spacing=0;fontFamily=Arial;fontSize=19;fontColor=#64748B;fontStyle=0;">
+          <mxGeometry x="40" y="85" width="1700" height="35" as="geometry" />
+        </mxCell>
+        <mxCell id="devbg" value="" vertex="1" parent="1" style="rounded=1;arcSize=10;whiteSpace=wrap;html=0;fillColor=#F8FAFC;strokeColor=#CBD5E1;strokeWidth=1.5;fontColor=#172B4D;fontFamily=Arial;fontSize=19;spacing=12;align=center;verticalAlign=middle;dashed=1;">
+          <mxGeometry x="40" y="145" width="1720" height="150" as="geometry" />
+        </mxCell>
+        <mxCell id="devtitle" value="개발 시 · 호환성 확보" vertex="1" parent="1" style="text;html=0;whiteSpace=wrap;align=left;verticalAlign=middle;spacing=0;fontFamily=Arial;fontSize=18;fontColor=#64748B;fontStyle=1;">
+          <mxGeometry x="60" y="155" width="220" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="plugin" value="Claude Code Plugin&#10;구현 가이드 · 코드 생성 · 규격 검사" vertex="1" parent="1" style="rounded=1;arcSize=10;whiteSpace=wrap;html=0;fillColor=#FFFFFF;strokeColor=#CBD5E1;strokeWidth=1.5;fontColor=#172B4D;fontFamily=Arial;fontSize=17;spacing=12;align=center;verticalAlign=middle;">
+          <mxGeometry x="65" y="205" width="355" height="65" as="geometry" />
+        </mxCell>
+        <mxCell id="package" value="호환 에이전트 패키지&#10;자체 토폴로지 + KPAP SDK 연동 코드" vertex="1" parent="1" style="rounded=1;arcSize=10;whiteSpace=wrap;html=0;fillColor=#EFF6FF;strokeColor=#2563EB;strokeWidth=1.5;fontColor=#172B4D;fontFamily=Arial;fontSize=17;spacing=12;align=center;verticalAlign=middle;">
+          <mxGeometry x="500" y="205" width="470" height="65" as="geometry" />
+        </mxCell>
+        <mxCell id="contract" value="호환 규격 (제안)&#10;요청·응답 / 인증 컨텍스트 / 서비스 호출 인터페이스" vertex="1" parent="1" style="rounded=1;arcSize=10;whiteSpace=wrap;html=0;fillColor=#FFFFFF;strokeColor=#CBD5E1;strokeWidth=1.5;fontColor=#172B4D;fontFamily=Arial;fontSize=17;spacing=12;align=center;verticalAlign=middle;">
+          <mxGeometry x="1090" y="205" width="640" height="65" as="geometry" />
+        </mxCell>
+        <mxCell id="d1" value="개발" edge="1" parent="1" style="edgeStyle=none;html=0;rounded=0;strokeColor=#64748B;strokeWidth=2;endArrow=block;endFill=1;fontSize=15;fontColor=#64748B;labelBackgroundColor=#FFFFFF;dashed=1;">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="420" y="238" as="sourcePoint" />
+            <mxPoint x="500" y="238" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="d2" value="" edge="1" parent="1" style="edgeStyle=none;html=0;rounded=0;strokeColor=#64748B;strokeWidth=2;endArrow=block;endFill=1;fontSize=15;fontColor=#64748B;labelBackgroundColor=#FFFFFF;dashed=1;">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1090" y="238" as="sourcePoint" />
+            <mxPoint x="970" y="238" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="deploy" value="패키지 로드" edge="1" parent="1" style="edgeStyle=none;html=0;rounded=0;strokeColor=#64748B;strokeWidth=2;endArrow=block;endFill=1;fontSize=15;fontColor=#64748B;labelBackgroundColor=#FFFFFF;dashed=1;">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="735" y="270" as="sourcePoint" />
+            <mxPoint x="735" y="320" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="agentbg" value="" vertex="1" parent="1" style="rounded=1;arcSize=10;whiteSpace=wrap;html=0;fillColor=#F8FAFF;strokeColor=#94B5F4;strokeWidth=1.5;fontColor=#172B4D;fontFamily=Arial;fontSize=19;spacing=12;align=center;verticalAlign=middle;">
+          <mxGeometry x="285" y="330" width="765" height="665" as="geometry" />
+        </mxCell>
+        <mxCell id="agenttitle" value="에이전트 런타임 · 배치 위치는 별도 결정" vertex="1" parent="1" style="text;html=0;whiteSpace=wrap;align=left;verticalAlign=middle;spacing=0;fontFamily=Arial;fontSize=23;fontColor=#2563EB;fontStyle=1;">
+          <mxGeometry x="310" y="345" width="700" height="35" as="geometry" />
+        </mxCell>
+        <mxCell id="kpapbg" value="" vertex="1" parent="1" style="rounded=1;arcSize=10;whiteSpace=wrap;html=0;fillColor=#EFFAF7;strokeColor=#7CBBAE;strokeWidth=1.5;fontColor=#172B4D;fontFamily=Arial;fontSize=19;spacing=12;align=center;verticalAlign=middle;">
+          <mxGeometry x="1130" y="330" width="365" height="665" as="geometry" />
+        </mxCell>
+        <mxCell id="kpaptitle" value="KPAP 공통 서비스" vertex="1" parent="1" style="text;html=0;whiteSpace=wrap;align=left;verticalAlign=middle;spacing=0;fontFamily=Arial;fontSize=23;fontColor=#087F8C;fontStyle=1;">
+          <mxGeometry x="1150" y="345" width="330" height="35" as="geometry" />
+        </mxCell>
+        <mxCell id="external" value="연동 대상" vertex="1" parent="1" style="text;html=0;whiteSpace=wrap;align=left;verticalAlign=middle;spacing=0;fontFamily=Arial;fontSize=22;fontColor=#172B4D;fontStyle=1;">
+          <mxGeometry x="1540" y="345" width="230" height="35" as="geometry" />
+        </mxCell>
+        <mxCell id="client" value="요청자&#10;Playground UI / API" vertex="1" parent="1" style="rounded=1;arcSize=10;whiteSpace=wrap;html=0;fillColor=#FFFFFF;strokeColor=#CBD5E1;strokeWidth=1.5;fontColor=#172B4D;fontFamily=Arial;fontSize=18;spacing=12;align=center;verticalAlign=middle;">
+          <mxGeometry x="40" y="435" width="195" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="entry" value="요청 진입점&#10;입력 검증 · 실행 컨텍스트" vertex="1" parent="1" style="rounded=1;arcSize=10;whiteSpace=wrap;html=0;fillColor=#FFFFFF;strokeColor=#CBD5E1;strokeWidth=1.5;fontColor=#172B4D;fontFamily=Arial;fontSize=18;spacing=12;align=center;verticalAlign=middle;">
+          <mxGeometry x="315" y="420" width="300" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="request" value="① 요청" edge="1" parent="1" style="edgeStyle=none;html=0;rounded=0;strokeColor=#2563EB;strokeWidth=2;endArrow=block;endFill=1;fontSize=15;fontColor=#2563EB;labelBackgroundColor=#FFFFFF;">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="235" y="460" as="sourcePoint" />
+            <mxPoint x="315" y="460" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="topobg" value="" vertex="1" parent="1" style="rounded=1;arcSize=10;whiteSpace=wrap;html=0;fillColor=#FFFFFF;strokeColor=#A8BFE7;strokeWidth=1.5;fontColor=#172B4D;fontFamily=Arial;fontSize=19;spacing=12;align=center;verticalAlign=middle;">
+          <mxGeometry x="315" y="535" width="345" height="300" as="geometry" />
+        </mxCell>
+        <mxCell id="topotitle" value="자체 토폴로지 / 실행 상태" vertex="1" parent="1" style="text;html=0;whiteSpace=wrap;align=left;verticalAlign=middle;spacing=0;fontFamily=Arial;fontSize=20;fontColor=#172B4D;fontStyle=1;">
+          <mxGeometry x="335" y="548" width="310" height="35" as="geometry" />
+        </mxCell>
+        <mxCell id="react" value="ReAct&#10;판단 → 행동 → 관찰 → 반복" vertex="1" parent="1" style="rounded=1;arcSize=10;whiteSpace=wrap;html=0;fillColor=#EFF6FF;strokeColor=#B6CEF8;strokeWidth=1.5;fontColor=#172B4D;fontFamily=Arial;fontSize=17;spacing=12;align=center;verticalAlign=middle;">
+          <mxGeometry x="335" y="600" width="305" height="85" as="geometry" />
+        </mxCell>
+        <mxCell id="workflow" value="Workflow / Graph&#10;단계 실행 → 분기 → 합류" vertex="1" parent="1" style="rounded=1;arcSize=10;whiteSpace=wrap;html=0;fillColor=#EFF6FF;strokeColor=#B6CEF8;strokeWidth=1.5;fontColor=#172B4D;fontFamily=Arial;fontSize=17;spacing=12;align=center;verticalAlign=middle;">
+          <mxGeometry x="335" y="710" width="305" height="85" as="geometry" />
+        </mxCell>
+        <mxCell id="start" value="" edge="1" parent="1" style="edgeStyle=none;html=0;rounded=0;strokeColor=#2563EB;strokeWidth=2;endArrow=block;endFill=1;fontSize=15;fontColor=#2563EB;labelBackgroundColor=#FFFFFF;">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="465" y="500" as="sourcePoint" />
+            <mxPoint x="465" y="535" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="sdkbg" value="" vertex="1" parent="1" style="rounded=1;arcSize=10;whiteSpace=wrap;html=0;fillColor=#FFFFFF;strokeColor=#2563EB;strokeWidth=1.5;fontColor=#172B4D;fontFamily=Arial;fontSize=19;spacing=12;align=center;verticalAlign=middle;">
+          <mxGeometry x="725" y="420" width="295" height="415" as="geometry" />
+        </mxCell>
+        <mxCell id="sdktitle" value="KPAP SDK" vertex="1" parent="1" style="text;html=0;whiteSpace=wrap;align=left;verticalAlign=middle;spacing=0;fontFamily=Arial;fontSize=23;fontColor=#2563EB;fontStyle=1;">
+          <mxGeometry x="745" y="435" width="255" height="35" as="geometry" />
+        </mxCell>
+        <mxCell id="sdkcontext" value="서비스 클라이언트 / 어댑터&#10;인증·실행 컨텍스트 전달" vertex="1" parent="1" style="text;html=0;whiteSpace=wrap;align=left;verticalAlign=middle;spacing=0;fontFamily=Arial;fontSize=16;fontColor=#64748B;fontStyle=0;">
+          <mxGeometry x="745" y="475" width="255" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="prompt" value="Prompt Client" vertex="1" parent="1" style="rounded=1;arcSize=10;whiteSpace=wrap;html=0;fillColor=#EFF6FF;strokeColor=#B6CEF8;strokeWidth=1.5;fontColor=#172B4D;fontFamily=Arial;fontSize=17;spacing=12;align=center;verticalAlign=middle;">
+          <mxGeometry x="750" y="550" width="245" height="45" as="geometry" />
+        </mxCell>
+        <mxCell id="rag" value="RAG Client" vertex="1" parent="1" style="rounded=1;arcSize=10;whiteSpace=wrap;html=0;fillColor=#EFF6FF;strokeColor=#B6CEF8;strokeWidth=1.5;fontColor=#172B4D;fontFamily=Arial;fontSize=17;spacing=12;align=center;verticalAlign=middle;">
+          <mxGeometry x="750" y="625" width="245" height="45" as="geometry" />
+        </mxCell>
+        <mxCell id="llm" value="LLM Client" vertex="1" parent="1" style="rounded=1;arcSize=10;whiteSpace=wrap;html=0;fillColor=#EFF6FF;strokeColor=#B6CEF8;strokeWidth=1.5;fontColor=#172B4D;fontFamily=Arial;fontSize=17;spacing=12;align=center;verticalAlign=middle;">
+          <mxGeometry x="750" y="700" width="245" height="45" as="geometry" />
+        </mxCell>
+        <mxCell id="tool" value="Tool Client" vertex="1" parent="1" style="rounded=1;arcSize=10;whiteSpace=wrap;html=0;fillColor=#EFF6FF;strokeColor=#B6CEF8;strokeWidth=1.5;fontColor=#172B4D;fontFamily=Arial;fontSize=17;spacing=12;align=center;verticalAlign=middle;">
+          <mxGeometry x="750" y="775" width="245" height="45" as="geometry" />
+        </mxCell>
+        <mxCell id="invoke" value="② 호출" edge="1" parent="1" style="edgeStyle=none;html=0;rounded=0;strokeColor=#2563EB;strokeWidth=2;endArrow=block;endFill=1;fontSize=15;fontColor=#2563EB;labelBackgroundColor=#FFFFFF;">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="660" y="570" as="sourcePoint" />
+            <mxPoint x="725" y="570" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="resume" value="결과 반영 / 다음 단계" edge="1" parent="1" style="edgeStyle=none;html=0;rounded=0;strokeColor=#2563EB;strokeWidth=2;endArrow=block;endFill=1;fontSize=15;fontColor=#2563EB;labelBackgroundColor=#FFFFFF;">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="725" y="810" as="sourcePoint" />
+            <mxPoint x="490" y="835" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="685" y="810" />
+              <mxPoint x="685" y="855" />
+              <mxPoint x="490" y="855" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="calls" value="토폴로지의 해당 노드에서 필요한 기능을 선택 호출&#10;LLM의 도구 호출 제안은 에이전트가 해석한 뒤 Tool Client로 실행" vertex="1" parent="1" style="text;html=0;whiteSpace=wrap;align=left;verticalAlign=middle;spacing=0;fontFamily=Arial;fontSize=16;fontColor=#64748B;fontStyle=0;">
+          <mxGeometry x="320" y="890" width="690" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="output" value="③ 최종 응답 또는 스트리밍 이벤트" vertex="1" parent="1" style="rounded=1;arcSize=10;whiteSpace=wrap;html=0;fillColor=#EFF6FF;strokeColor=#B6CEF8;strokeWidth=1.5;fontColor=#172B4D;fontFamily=Arial;fontSize=16;spacing=12;align=center;verticalAlign=middle;">
+          <mxGeometry x="315" y="945" width="705" height="35" as="geometry" />
+        </mxCell>
+        <mxCell id="final" value="응답" edge="1" parent="1" style="edgeStyle=none;html=0;rounded=0;strokeColor=#2563EB;strokeWidth=2;endArrow=block;endFill=1;fontSize=15;fontColor=#2563EB;labelBackgroundColor=#FFFFFF;">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="315" y="963" as="sourcePoint" />
+            <mxPoint x="235" y="515" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="260" y="963" />
+              <mxPoint x="260" y="515" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ps" value="프롬프트 조회&#10;ID·버전 → 템플릿 / 설정" vertex="1" parent="1" style="rounded=1;arcSize=10;whiteSpace=wrap;html=0;fillColor=#FFFFFF;strokeColor=#9BCEC2;strokeWidth=1.5;fontColor=#172B4D;fontFamily=Arial;fontSize=18;spacing=12;align=center;verticalAlign=middle;">
+          <mxGeometry x="1150" y="535" width="325" height="85" as="geometry" />
+        </mxCell>
+        <mxCell id="psdest" value="프롬프트 저장소" vertex="1" parent="1" style="rounded=1;arcSize=10;whiteSpace=wrap;html=0;fillColor=#F8FAFC;strokeColor=#CBD5E1;strokeWidth=1.5;fontColor=#172B4D;fontFamily=Arial;fontSize=17;spacing=12;align=center;verticalAlign=middle;">
+          <mxGeometry x="1540" y="535" width="220" height="85" as="geometry" />
+        </mxCell>
+        <mxCell id="pscall" value="" edge="1" parent="1" style="edgeStyle=none;html=0;rounded=0;strokeColor=#087F8C;strokeWidth=2;endArrow=block;endFill=1;fontSize=15;fontColor=#087F8C;labelBackgroundColor=#FFFFFF;">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="995" y="572" as="sourcePoint" />
+            <mxPoint x="1150" y="577" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="1065" y="572" />
+              <mxPoint x="1065" y="577" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="psdown" value="" edge="1" parent="1" style="edgeStyle=none;html=0;rounded=0;strokeColor=#087F8C;strokeWidth=2;endArrow=block;endFill=1;fontSize=15;fontColor=#087F8C;labelBackgroundColor=#FFFFFF;">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1475" y="577" as="sourcePoint" />
+            <mxPoint x="1540" y="577" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="rs" value="RAG 호출&#10;질의·필터 → 근거 / 출처" vertex="1" parent="1" style="rounded=1;arcSize=10;whiteSpace=wrap;html=0;fillColor=#FFFFFF;strokeColor=#9BCEC2;strokeWidth=1.5;fontColor=#172B4D;fontFamily=Arial;fontSize=18;spacing=12;align=center;verticalAlign=middle;">
+          <mxGeometry x="1150" y="645" width="325" height="85" as="geometry" />
+        </mxCell>
+        <mxCell id="rsdest" value="문서 / 검색 인덱스" vertex="1" parent="1" style="rounded=1;arcSize=10;whiteSpace=wrap;html=0;fillColor=#F8FAFC;strokeColor=#CBD5E1;strokeWidth=1.5;fontColor=#172B4D;fontFamily=Arial;fontSize=17;spacing=12;align=center;verticalAlign=middle;">
+          <mxGeometry x="1540" y="645" width="220" height="85" as="geometry" />
+        </mxCell>
+        <mxCell id="rscall" value="" edge="1" parent="1" style="edgeStyle=none;html=0;rounded=0;strokeColor=#087F8C;strokeWidth=2;endArrow=block;endFill=1;fontSize=15;fontColor=#087F8C;labelBackgroundColor=#FFFFFF;">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="995" y="647" as="sourcePoint" />
+            <mxPoint x="1150" y="687" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="1077" y="647" />
+              <mxPoint x="1077" y="687" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="rsdown" value="" edge="1" parent="1" style="edgeStyle=none;html=0;rounded=0;strokeColor=#087F8C;strokeWidth=2;endArrow=block;endFill=1;fontSize=15;fontColor=#087F8C;labelBackgroundColor=#FFFFFF;">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1475" y="687" as="sourcePoint" />
+            <mxPoint x="1540" y="687" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ls" value="LLM Gateway&#10;메시지 → 생성 / 도구 호출 제안" vertex="1" parent="1" style="rounded=1;arcSize=10;whiteSpace=wrap;html=0;fillColor=#FFFFFF;strokeColor=#9BCEC2;strokeWidth=1.5;fontColor=#172B4D;fontFamily=Arial;fontSize=18;spacing=12;align=center;verticalAlign=middle;">
+          <mxGeometry x="1150" y="755" width="325" height="85" as="geometry" />
+        </mxCell>
+        <mxCell id="lsdest" value="LLM Provider(s)" vertex="1" parent="1" style="rounded=1;arcSize=10;whiteSpace=wrap;html=0;fillColor=#F8FAFC;strokeColor=#CBD5E1;strokeWidth=1.5;fontColor=#172B4D;fontFamily=Arial;fontSize=17;spacing=12;align=center;verticalAlign=middle;">
+          <mxGeometry x="1540" y="755" width="220" height="85" as="geometry" />
+        </mxCell>
+        <mxCell id="lscall" value="" edge="1" parent="1" style="edgeStyle=none;html=0;rounded=0;strokeColor=#087F8C;strokeWidth=2;endArrow=block;endFill=1;fontSize=15;fontColor=#087F8C;labelBackgroundColor=#FFFFFF;">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="995" y="722" as="sourcePoint" />
+            <mxPoint x="1150" y="797" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="1089" y="722" />
+              <mxPoint x="1089" y="797" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="lsdown" value="" edge="1" parent="1" style="edgeStyle=none;html=0;rounded=0;strokeColor=#087F8C;strokeWidth=2;endArrow=block;endFill=1;fontSize=15;fontColor=#087F8C;labelBackgroundColor=#FFFFFF;">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1475" y="797" as="sourcePoint" />
+            <mxPoint x="1540" y="797" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ts" value="도구 호출 프록시&#10;도구명·인자 → 실행 결과" vertex="1" parent="1" style="rounded=1;arcSize=10;whiteSpace=wrap;html=0;fillColor=#FFFFFF;strokeColor=#9BCEC2;strokeWidth=1.5;fontColor=#172B4D;fontFamily=Arial;fontSize=18;spacing=12;align=center;verticalAlign=middle;">
+          <mxGeometry x="1150" y="865" width="325" height="85" as="geometry" />
+        </mxCell>
+        <mxCell id="tsdest" value="업무 API / MCP 서버" vertex="1" parent="1" style="rounded=1;arcSize=10;whiteSpace=wrap;html=0;fillColor=#F8FAFC;strokeColor=#CBD5E1;strokeWidth=1.5;fontColor=#172B4D;fontFamily=Arial;fontSize=17;spacing=12;align=center;verticalAlign=middle;">
+          <mxGeometry x="1540" y="865" width="220" height="85" as="geometry" />
+        </mxCell>
+        <mxCell id="tscall" value="" edge="1" parent="1" style="edgeStyle=none;html=0;rounded=0;strokeColor=#087F8C;strokeWidth=2;endArrow=block;endFill=1;fontSize=15;fontColor=#087F8C;labelBackgroundColor=#FFFFFF;">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="995" y="810" as="sourcePoint" />
+            <mxPoint x="1150" y="907" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="1101" y="810" />
+              <mxPoint x="1101" y="907" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="tsdown" value="" edge="1" parent="1" style="edgeStyle=none;html=0;rounded=0;strokeColor=#087F8C;strokeWidth=2;endArrow=block;endFill=1;fontSize=15;fontColor=#087F8C;labelBackgroundColor=#FFFFFF;">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1475" y="907" as="sourcePoint" />
+            <mxPoint x="1540" y="907" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="note" value="경계 원칙  |  ReAct / Workflow는 에이전트 구현의 선택이다. KPAP은 공통 서비스 인터페이스를 제공한다.&#10;실선 = 실행 중 호출 (결과는 호출 경로로 반환)   ·   점선 = 개발·패키징 흐름   ·   Claude Code Plugin은 개발 지원 역할" vertex="1" parent="1" style="text;html=0;whiteSpace=wrap;align=left;verticalAlign=middle;spacing=0;fontFamily=Arial;fontSize=18;fontColor=#64748B;fontStyle=0;">
+          <mxGeometry x="40" y="1040" width="1720" height="65" as="geometry" />
+        </mxCell>
+        <mxCell id="assume" value="설계 가정: SDK를 런타임에 포함한다. 배치·전송 프로토콜·인증 방식·재시도 정책은 상세 규격에서 확정한다." vertex="1" parent="1" style="text;html=0;whiteSpace=wrap;align=left;verticalAlign=middle;spacing=0;fontFamily=Arial;fontSize=16;fontColor=#64748B;fontStyle=0;">
+          <mxGeometry x="40" y="1125" width="1720" height="35" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="2" name="02 요청 실행 순서">
+    <mxGraphModel grid="1" gridSize="10" page="1" pageWidth="1800" pageHeight="1160" background="#FFFFFF">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title" value="요청 1건의 실행 흐름 · ReAct 예시" vertex="1" parent="1" style="text;html=0;whiteSpace=wrap;align=left;verticalAlign=middle;spacing=0;fontFamily=Arial;fontSize=32;fontColor=#172B4D;fontStyle=1;">
+          <mxGeometry x="40" y="25" width="1720" height="55" as="geometry" />
+        </mxCell>
+        <mxCell id="sub" value="Workflow도 각 단계에서 같은 SDK 인터페이스를 사용한다. 프롬프트·RAG·도구 호출은 시나리오에 따라 선택한다." vertex="1" parent="1" style="text;html=0;whiteSpace=wrap;align=left;verticalAlign=middle;spacing=0;fontFamily=Arial;fontSize=18;fontColor=#64748B;fontStyle=0;">
+          <mxGeometry x="40" y="85" width="1720" height="35" as="geometry" />
+        </mxCell>
+        <mxCell id="actor0" value="요청자" vertex="1" parent="1" style="rounded=1;arcSize=10;whiteSpace=wrap;html=0;fillColor=#EFF6FF;strokeColor=#2563EB;strokeWidth=1.5;fontColor=#172B4D;fontFamily=Arial;fontSize=18;spacing=12;align=center;verticalAlign=middle;">
+          <mxGeometry x="30" y="155" width="200" height="75" as="geometry" />
+        </mxCell>
+        <mxCell id="life0" value="" edge="1" parent="1" style="edgeStyle=none;html=0;rounded=0;strokeColor=#64748B;strokeWidth=2;endArrow=none;endFill=1;fontSize=15;fontColor=#64748B;labelBackgroundColor=#FFFFFF;dashed=1;">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="130" y="230" as="sourcePoint" />
+            <mxPoint x="130" y="1020" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="actor1" value="에이전트&#10;자체 토폴로지" vertex="1" parent="1" style="rounded=1;arcSize=10;whiteSpace=wrap;html=0;fillColor=#EFF6FF;strokeColor=#2563EB;strokeWidth=1.5;fontColor=#172B4D;fontFamily=Arial;fontSize=18;spacing=12;align=center;verticalAlign=middle;">
+          <mxGeometry x="300" y="155" width="200" height="75" as="geometry" />
+        </mxCell>
+        <mxCell id="life1" value="" edge="1" parent="1" style="edgeStyle=none;html=0;rounded=0;strokeColor=#64748B;strokeWidth=2;endArrow=none;endFill=1;fontSize=15;fontColor=#64748B;labelBackgroundColor=#FFFFFF;dashed=1;">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="400" y="230" as="sourcePoint" />
+            <mxPoint x="400" y="1020" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="actor2" value="KPAP SDK" vertex="1" parent="1" style="rounded=1;arcSize=10;whiteSpace=wrap;html=0;fillColor=#EFF6FF;strokeColor=#2563EB;strokeWidth=1.5;fontColor=#172B4D;fontFamily=Arial;fontSize=18;spacing=12;align=center;verticalAlign=middle;">
+          <mxGeometry x="570" y="155" width="200" height="75" as="geometry" />
+        </mxCell>
+        <mxCell id="life2" value="" edge="1" parent="1" style="edgeStyle=none;html=0;rounded=0;strokeColor=#64748B;strokeWidth=2;endArrow=none;endFill=1;fontSize=15;fontColor=#64748B;labelBackgroundColor=#FFFFFF;dashed=1;">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="670" y="230" as="sourcePoint" />
+            <mxPoint x="670" y="1020" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="actor3" value="프롬프트 조회" vertex="1" parent="1" style="rounded=1;arcSize=10;whiteSpace=wrap;html=0;fillColor=#EFFAF7;strokeColor=#087F8C;strokeWidth=1.5;fontColor=#172B4D;fontFamily=Arial;fontSize=18;spacing=12;align=center;verticalAlign=middle;">
+          <mxGeometry x="840" y="155" width="200" height="75" as="geometry" />
+        </mxCell>
+        <mxCell id="life3" value="" edge="1" parent="1" style="edgeStyle=none;html=0;rounded=0;strokeColor=#64748B;strokeWidth=2;endArrow=none;endFill=1;fontSize=15;fontColor=#64748B;labelBackgroundColor=#FFFFFF;dashed=1;">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="940" y="230" as="sourcePoint" />
+            <mxPoint x="940" y="1020" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="actor4" value="RAG 호출" vertex="1" parent="1" style="rounded=1;arcSize=10;whiteSpace=wrap;html=0;fillColor=#EFFAF7;strokeColor=#087F8C;strokeWidth=1.5;fontColor=#172B4D;fontFamily=Arial;fontSize=18;spacing=12;align=center;verticalAlign=middle;">
+          <mxGeometry x="1090" y="155" width="200" height="75" as="geometry" />
+        </mxCell>
+        <mxCell id="life4" value="" edge="1" parent="1" style="edgeStyle=none;html=0;rounded=0;strokeColor=#64748B;strokeWidth=2;endArrow=none;endFill=1;fontSize=15;fontColor=#64748B;labelBackgroundColor=#FFFFFF;dashed=1;">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1190" y="230" as="sourcePoint" />
+            <mxPoint x="1190" y="1020" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="actor5" value="LLM Gateway" vertex="1" parent="1" style="rounded=1;arcSize=10;whiteSpace=wrap;html=0;fillColor=#EFFAF7;strokeColor=#087F8C;strokeWidth=1.5;fontColor=#172B4D;fontFamily=Arial;fontSize=18;spacing=12;align=center;verticalAlign=middle;">
+          <mxGeometry x="1330" y="155" width="200" height="75" as="geometry" />
+        </mxCell>
+        <mxCell id="life5" value="" edge="1" parent="1" style="edgeStyle=none;html=0;rounded=0;strokeColor=#64748B;strokeWidth=2;endArrow=none;endFill=1;fontSize=15;fontColor=#64748B;labelBackgroundColor=#FFFFFF;dashed=1;">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1430" y="230" as="sourcePoint" />
+            <mxPoint x="1430" y="1020" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="actor6" value="도구 호출 프록시" vertex="1" parent="1" style="rounded=1;arcSize=10;whiteSpace=wrap;html=0;fillColor=#EFFAF7;strokeColor=#087F8C;strokeWidth=1.5;fontColor=#172B4D;fontFamily=Arial;fontSize=18;spacing=12;align=center;verticalAlign=middle;">
+          <mxGeometry x="1580" y="155" width="200" height="75" as="geometry" />
+        </mxCell>
+        <mxCell id="life6" value="" edge="1" parent="1" style="edgeStyle=none;html=0;rounded=0;strokeColor=#64748B;strokeWidth=2;endArrow=none;endFill=1;fontSize=15;fontColor=#64748B;labelBackgroundColor=#FFFFFF;dashed=1;">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1680" y="230" as="sourcePoint" />
+            <mxPoint x="1680" y="1020" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="request" value="① 요청 + 실행 컨텍스트" edge="1" parent="1" style="edgeStyle=none;html=0;rounded=0;strokeColor=#2563EB;strokeWidth=2;endArrow=block;endFill=1;fontSize=15;fontColor=#2563EB;labelBackgroundColor=#FFFFFF;">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="130" y="275" as="sourcePoint" />
+            <mxPoint x="400" y="275" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="getprompt" value="② 프롬프트 조회 (선택)" edge="1" parent="1" style="edgeStyle=none;html=0;rounded=0;strokeColor=#2563EB;strokeWidth=2;endArrow=block;endFill=1;fontSize=15;fontColor=#2563EB;labelBackgroundColor=#FFFFFF;">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="400" y="330" as="sourcePoint" />
+            <mxPoint x="670" y="330" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="getprompt2" value="ID / 버전" edge="1" parent="1" style="edgeStyle=none;html=0;rounded=0;strokeColor=#087F8C;strokeWidth=2;endArrow=block;endFill=1;fontSize=15;fontColor=#087F8C;labelBackgroundColor=#FFFFFF;">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="670" y="370" as="sourcePoint" />
+            <mxPoint x="940" y="370" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="promptret" value="템플릿 / 설정" edge="1" parent="1" style="edgeStyle=none;html=0;rounded=0;strokeColor=#64748B;strokeWidth=2;endArrow=block;endFill=1;fontSize=15;fontColor=#64748B;labelBackgroundColor=#FFFFFF;dashed=1;">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="940" y="410" as="sourcePoint" />
+            <mxPoint x="670" y="410" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="promptretsdk" value="" edge="1" parent="1" style="edgeStyle=none;html=0;rounded=0;strokeColor=#64748B;strokeWidth=2;endArrow=block;endFill=1;fontSize=15;fontColor=#64748B;labelBackgroundColor=#FFFFFF;dashed=1;">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="670" y="410" as="sourcePoint" />
+            <mxPoint x="400" y="410" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="rag" value="③ 근거 검색 (선택)" edge="1" parent="1" style="edgeStyle=none;html=0;rounded=0;strokeColor=#2563EB;strokeWidth=2;endArrow=block;endFill=1;fontSize=15;fontColor=#2563EB;labelBackgroundColor=#FFFFFF;">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="400" y="465" as="sourcePoint" />
+            <mxPoint x="670" y="465" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="rag2" value="질의 / 필터" edge="1" parent="1" style="edgeStyle=none;html=0;rounded=0;strokeColor=#087F8C;strokeWidth=2;endArrow=block;endFill=1;fontSize=15;fontColor=#087F8C;labelBackgroundColor=#FFFFFF;">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="670" y="505" as="sourcePoint" />
+            <mxPoint x="1190" y="505" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ragret" value="근거 / 출처" edge="1" parent="1" style="edgeStyle=none;html=0;rounded=0;strokeColor=#64748B;strokeWidth=2;endArrow=block;endFill=1;fontSize=15;fontColor=#64748B;labelBackgroundColor=#FFFFFF;dashed=1;">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1190" y="545" as="sourcePoint" />
+            <mxPoint x="670" y="545" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ragretsdk" value="" edge="1" parent="1" style="edgeStyle=none;html=0;rounded=0;strokeColor=#64748B;strokeWidth=2;endArrow=block;endFill=1;fontSize=15;fontColor=#64748B;labelBackgroundColor=#FFFFFF;dashed=1;">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="670" y="545" as="sourcePoint" />
+            <mxPoint x="400" y="545" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="loop" value="" vertex="1" parent="1" style="rounded=1;arcSize=10;whiteSpace=wrap;html=0;fillColor=#F8FAFC;strokeColor=#CBD5E1;strokeWidth=1.5;fontColor=#172B4D;fontFamily=Arial;fontSize=19;spacing=12;align=center;verticalAlign=middle;dashed=1;">
+          <mxGeometry x="280" y="590" width="1480" height="360" as="geometry" />
+        </mxCell>
+        <mxCell id="looptitle" value="ReAct 반복  |  종료 조건 또는 실행 한도까지 ④–⑥ 수행" vertex="1" parent="1" style="text;html=0;whiteSpace=wrap;align=left;verticalAlign=middle;spacing=0;fontFamily=Arial;fontSize=18;fontColor=#172B4D;fontStyle=1;">
+          <mxGeometry x="300" y="597" width="1200" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="llm" value="④ 메시지 + 근거 + 도구 스키마" edge="1" parent="1" style="edgeStyle=none;html=0;rounded=0;strokeColor=#2563EB;strokeWidth=2;endArrow=block;endFill=1;fontSize=15;fontColor=#2563EB;labelBackgroundColor=#FFFFFF;">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="400" y="655" as="sourcePoint" />
+            <mxPoint x="670" y="655" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="llm2" value="모델 호출" edge="1" parent="1" style="edgeStyle=none;html=0;rounded=0;strokeColor=#087F8C;strokeWidth=2;endArrow=block;endFill=1;fontSize=15;fontColor=#087F8C;labelBackgroundColor=#FFFFFF;">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="670" y="695" as="sourcePoint" />
+            <mxPoint x="1430" y="695" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="llmret" value="생성 결과 / 도구 호출 제안" edge="1" parent="1" style="edgeStyle=none;html=0;rounded=0;strokeColor=#64748B;strokeWidth=2;endArrow=block;endFill=1;fontSize=15;fontColor=#64748B;labelBackgroundColor=#FFFFFF;dashed=1;">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1430" y="735" as="sourcePoint" />
+            <mxPoint x="670" y="735" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="llmretsdk" value="" edge="1" parent="1" style="edgeStyle=none;html=0;rounded=0;strokeColor=#64748B;strokeWidth=2;endArrow=block;endFill=1;fontSize=15;fontColor=#64748B;labelBackgroundColor=#FFFFFF;dashed=1;">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="670" y="735" as="sourcePoint" />
+            <mxPoint x="400" y="735" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="tool" value="⑤ 필요 시 도구 실행 결정" edge="1" parent="1" style="edgeStyle=none;html=0;rounded=0;strokeColor=#2563EB;strokeWidth=2;endArrow=block;endFill=1;fontSize=15;fontColor=#2563EB;labelBackgroundColor=#FFFFFF;">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="400" y="795" as="sourcePoint" />
+            <mxPoint x="670" y="795" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="tool2" value="도구명 / 인자" edge="1" parent="1" style="edgeStyle=none;html=0;rounded=0;strokeColor=#087F8C;strokeWidth=2;endArrow=block;endFill=1;fontSize=15;fontColor=#087F8C;labelBackgroundColor=#FFFFFF;">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="670" y="835" as="sourcePoint" />
+            <mxPoint x="1680" y="835" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="toolret" value="도구 실행 결과" edge="1" parent="1" style="edgeStyle=none;html=0;rounded=0;strokeColor=#64748B;strokeWidth=2;endArrow=block;endFill=1;fontSize=15;fontColor=#64748B;labelBackgroundColor=#FFFFFF;dashed=1;">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1680" y="875" as="sourcePoint" />
+            <mxPoint x="670" y="875" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="toolretsdk" value="" edge="1" parent="1" style="edgeStyle=none;html=0;rounded=0;strokeColor=#64748B;strokeWidth=2;endArrow=block;endFill=1;fontSize=15;fontColor=#64748B;labelBackgroundColor=#FFFFFF;dashed=1;">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="670" y="875" as="sourcePoint" />
+            <mxPoint x="400" y="875" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="observe" value="⑥ 에이전트가 관찰 결과·상태를 갱신하고, 다음 행동 또는 종료를 결정" vertex="1" parent="1" style="text;html=0;whiteSpace=wrap;align=left;verticalAlign=middle;spacing=0;fontFamily=Arial;fontSize=17;fontColor=#2563EB;fontStyle=0;">
+          <mxGeometry x="425" y="905" width="1200" height="28" as="geometry" />
+        </mxCell>
+        <mxCell id="final" value="⑦ 최종 응답 / 스트림 이벤트" edge="1" parent="1" style="edgeStyle=none;html=0;rounded=0;strokeColor=#2563EB;strokeWidth=2;endArrow=block;endFill=1;fontSize=15;fontColor=#2563EB;labelBackgroundColor=#FFFFFF;">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="400" y="990" as="sourcePoint" />
+            <mxPoint x="130" y="990" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="footer" value="도구 호출 제안과 실제 도구 실행을 분리한다. 도구 실행 결과는 에이전트가 다음 LLM 입력에 반영한다.&#10;오류·타임아웃은 SDK를 통해 토폴로지에 전달하며, 복구·분기·종료 정책은 상세 규격에서 정한다." vertex="1" parent="1" style="text;html=0;whiteSpace=wrap;align=left;verticalAlign=middle;spacing=0;fontFamily=Arial;fontSize=18;fontColor=#64748B;fontStyle=0;">
+          <mxGeometry x="40" y="1060" width="1720" height="60" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
