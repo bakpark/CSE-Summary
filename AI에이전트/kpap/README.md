@@ -31,3 +31,7 @@
 공통 계약 확정 → 대표 SDK 실행 → Playground 호출·관측 → 오프라인 평가·Plugin → 온라인 평가.
 
 플랫폼 호스팅·전체 코드 자동 계측·자동 최적화·자동 운영 승격은 별도 범위다.
+
+## 그래프 조회·A2A 설정 확장
+
+[SDK 그래프·A2A 규약](../agentic%20platform/kpap-graph-minimal-contract.md)에 endpoint, Agent Card 확장, 네 설정의 타입과 검증 규칙을 정리했다. [SDK 연동 데모](https://kpap-node-workspace.justgecko33.chatgpt.site/sdk.html)는 응답 기반 그래프 표시와 요청·적용값 검증을 제공한다. 실제 원격 실행은 연결하지 않았다.
