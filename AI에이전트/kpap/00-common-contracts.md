@@ -52,3 +52,7 @@ logical_call_id는 한 호출을 식별한다. attempt_id는 재시도를 식별
 kpap 기본 경로 제안은 /api/v1이다. 목록은 cursor·limit을 사용한다. 생성은 멱등키, 변경은 ETag·If-Match를 사용한다. 시각은 UTC로 저장하고 사용자 시간대로 표시한다.
 
 데이터별 원본 저장소는 하나로 정한다. SDK는 관측을 송신한다. kpap 서버가 Langfuse를 조회한다. 상세는 [연동 명세](08-langfuse-v3-integration.md)를 따른다.
+
+## 그래프 조회·A2A 확장
+
+SDK 호스트의 그래프 응답과 A2A 노드별 변경값은 [그래프·A2A 규약](../agentic%20platform/kpap-graph-minimal-contract.md)을 따른다. 공통값·프로필 해석 후 wire 변경값은 최상위 키 단위로 교체한다. knowledge 객체와 tools 배열은 전체 교체한다. 요청별 스냅샷·run 바인딩·실제 적용 확인 원칙은 유지한다.

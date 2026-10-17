@@ -1,0 +1,43 @@
+{
+  "name": "고객 지원 · SDK 연동 예제",
+  "description": "로컬 모의 계약 검증용 Agent Card. 실제 에이전트가 아닙니다.",
+  "version": "demo-2",
+  "supportedInterfaces": [
+    {
+      "url": "https://agent.example.com/a2a",
+      "protocolBinding": "JSONRPC",
+      "protocolVersion": "1.0"
+    }
+  ],
+  "capabilities": {
+    "streaming": false,
+    "extensions": [
+      {
+        "uri": "urn:kpap:graph-config:1",
+        "description": "KPAP 그래프 조회 및 노드별 실행 설정",
+        "required": false,
+        "params": {
+          "graphUrl": "https://agent.example.com/agents/support-agent/graph",
+          "schemaVersion": "1.0",
+          "metadataKey": "kpap"
+        }
+      }
+    ]
+  },
+  "defaultInputModes": [
+    "text/plain"
+  ],
+  "defaultOutputModes": [
+    "text/plain"
+  ],
+  "skills": [
+    {
+      "id": "support",
+      "name": "고객 지원",
+      "description": "정책과 주문 문의 응답",
+      "tags": [
+        "support"
+      ]
+    }
+  ]
+}

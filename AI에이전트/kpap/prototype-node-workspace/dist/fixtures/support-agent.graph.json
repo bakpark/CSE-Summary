@@ -1,0 +1,279 @@
+{
+  "schemaVersion": "1.0",
+  "agentId": "support-agent",
+  "version": "v2",
+  "nodes": [
+    {
+      "id": "input",
+      "name": "입력",
+      "type": "input"
+    },
+    {
+      "id": "intent",
+      "name": "의도 분류",
+      "type": "llm",
+      "config": {
+        "model": "balanced",
+        "prompt": "고객 질문을 주문·배송·반품으로 분류하세요."
+      },
+      "editable": [
+        "model",
+        "prompt"
+      ],
+      "configSchema": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "model",
+          "prompt"
+        ],
+        "properties": {
+          "model": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 8000,
+            "enum": [
+              "balanced",
+              "fast",
+              "reasoning"
+            ]
+          },
+          "prompt": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 8000
+          }
+        }
+      }
+    },
+    {
+      "id": "retrieve",
+      "name": "지식 검색",
+      "type": "rag",
+      "config": {
+        "knowledge": {
+          "resourceId": "customer-guide",
+          "version": "v1",
+          "topK": 5
+        }
+      },
+      "editable": [
+        "knowledge"
+      ],
+      "configSchema": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "knowledge"
+        ],
+        "properties": {
+          "knowledge": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "resourceId",
+              "version",
+              "topK"
+            ],
+            "properties": {
+              "resourceId": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 8000,
+                "enum": [
+                  "customer-guide",
+                  "returns-policy",
+                  "internal-guide"
+                ]
+              },
+              "version": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 8000,
+                "enum": [
+                  "v1"
+                ]
+              },
+              "topK": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 20
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "tool",
+      "name": "도구 호출",
+      "type": "tool",
+      "config": {
+        "tools": [
+          "order-status"
+        ]
+      },
+      "editable": [
+        "tools"
+      ],
+      "configSchema": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "tools"
+        ],
+        "properties": {
+          "tools": {
+            "type": "array",
+            "maxItems": 10,
+            "uniqueItems": true,
+            "items": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 8000,
+              "enum": [
+                "order-status",
+                "ticket-search",
+                "refund-status"
+              ]
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "answer",
+      "name": "답변 생성",
+      "type": "llm",
+      "config": {
+        "model": "balanced",
+        "prompt": "고객 서비스 근거에 따라 조건을 명확하게 설명하세요. 확인되지 않은 내용은 추측하지 마세요.",
+        "knowledge": {
+          "resourceId": "customer-guide",
+          "version": "v1",
+          "topK": 5
+        },
+        "tools": [
+          "ticket-search"
+        ]
+      },
+      "editable": [
+        "model",
+        "prompt",
+        "knowledge",
+        "tools"
+      ],
+      "configSchema": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "model",
+          "prompt",
+          "knowledge",
+          "tools"
+        ],
+        "properties": {
+          "model": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 8000,
+            "enum": [
+              "balanced",
+              "fast",
+              "reasoning"
+            ]
+          },
+          "prompt": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 8000
+          },
+          "knowledge": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "resourceId",
+              "version",
+              "topK"
+            ],
+            "properties": {
+              "resourceId": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 8000,
+                "enum": [
+                  "customer-guide",
+                  "returns-policy",
+                  "internal-guide"
+                ]
+              },
+              "version": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 8000,
+                "enum": [
+                  "v1"
+                ]
+              },
+              "topK": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 20
+              }
+            }
+          },
+          "tools": {
+            "type": "array",
+            "maxItems": 10,
+            "uniqueItems": true,
+            "items": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 8000,
+              "enum": [
+                "order-status",
+                "ticket-search",
+                "refund-status"
+              ]
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "output",
+      "name": "출력",
+      "type": "output"
+    }
+  ],
+  "edges": [
+    {
+      "source": "input",
+      "target": "intent"
+    },
+    {
+      "source": "intent",
+      "target": "retrieve",
+      "kind": "conditional",
+      "label": "정책·반품"
+    },
+    {
+      "source": "intent",
+      "target": "tool",
+      "kind": "conditional",
+      "label": "주문·환불"
+    },
+    {
+      "source": "retrieve",
+      "target": "answer"
+    },
+    {
+      "source": "tool",
+      "target": "answer"
+    },
+    {
+      "source": "answer",
+      "target": "output"
+    }
+  ]
+}
