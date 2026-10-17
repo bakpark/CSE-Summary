@@ -14,6 +14,7 @@
 |---|---|
 | [노드 작업공간 프로토타입](prototype-node-workspace/README.md) | 핵심 화면의 노드 설정·수행·평가·이력 |
 | [프로토타입](prototype/README.md) | 모의 데이터로 설정·실행·평가 흐름 체험 |
+| [SDK endpoint 계약](11-sdk-endpoint-contracts.md) | A2A 실행·플로우차트 조회의 요청·응답·오류 |
 | [SDK](01-sdk-spec.md) | 고객 서비스 실행·설정·호출·계측 |
 | [Plugin](02-plugin-spec.md) | 리소스 탐색·SDK 적용·로컬 평가 |
 | [시나리오와 액션별 화면](10-user-scenarios-and-screens.md) | 실행·이력·평가·추적 액션과 화면 상태 |

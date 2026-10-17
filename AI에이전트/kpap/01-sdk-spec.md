@@ -81,3 +81,5 @@ RunContext는 run_id, snapshot_id, 코드·노드 정의 버전, 바인딩 자�
 ## 그래프 공개 어댑터
 
 선택적 SDK 호스트 어댑터는 Agent Card, `GET /agents/{agentId}/graph`, Card의 A2A endpoint를 제공한다. NodeSpec·GraphSpec은 등록·compile 시 보존한다. 클로저에서 설정을 역추정하지 않는다. 모델·프롬프트·도구·지식의 공개 설정과 수정 범위, 요청별 적용·검증은 [그래프·A2A 규약](../agentic%20platform/kpap-graph-minimal-contract.md)을 따른다. HTTP 서버 어댑터는 핵심 SDK와 분리한다. 현재 프로토타입은 계약 검증 데모이며 LangGraph 호스트 구현은 미완료다.
+
+HTTP 요청·응답과 호스트 구현 완료 기준은 [SDK endpoint 계약](11-sdk-endpoint-contracts.md)을 따른다.
