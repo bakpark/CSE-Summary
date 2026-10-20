@@ -1,67 +1,71 @@
-# kpap Langfuse v3 연동 명세
+# Playground · Langfuse 연동
 
-대상은 self-hosted 서버 v3다. SDK는 관측을 송신한다. kpap 서버가 조회하고 Plugin·Playground에 제공한다.
+## 설계 원칙
 
-실제 배포 릴리스·OpenAPI는 미확인이다. 아래는 연동 후보 계약이다. 필드·필터·지원 기능은 배포 서버에서 검증한다.
+Playground가 kpap 서버를 통해 모든 A2A 호출을 시작한다. 플랫폼은 호출 사실과 실행 상태를 알고 있으며, 상세 실행 이력은 SDK가 Langfuse에 기록한다. Playground는 필요할 때 kpap 서버를 통해 조회한다.
 
-## 데이터 책임
+**플랫폼에는 실행 목록과 상세 조회에 필요한 최소 정보만 저장한다.** 프롬프트·응답·노드별 로그·사용량·비용을 플랫폼 DB에 중복 저장하지 않는다.
 
-| 데이터 | 원본 |
+## 역할
+
+| 구성 요소 | 책임 |
 |---|---|
-| 설정·실행 상태·정책·분모 | kpap |
-| 상세 관측·사용량·비용 | Langfuse |
-| 데이터셋·고정 입력·평가 결과 | 기존 평가 저장소 또는 kpap. 객체별 하나로 확정 |
-| kpap 평가의 LF score | 원본 결과의 투영 |
-| Langfuse 생성 score | 외부 평가 출처 |
+| Playground · kpap | A2A 호출, 최소 실행 기록, 이력 조회와 화면 표시 |
+| SDK 호스트 | 에이전트 실행, 상태·결과 응답, 노드·모델·도구 계측 |
+| Langfuse | 상세 입력·출력·관측·사용량·비용 저장과 조회 |
 
-## API
+실시간 응답·실행 상태는 A2A로 받고, 상세 트레이스는 Langfuse에서 조회한다. Langfuse 조회 실패가 A2A 실행 결과를 바꾸지 않는다.
 
-Langfuse 기본 경로는 /api/public이다.
+## 플랫폼 최소 저장 정보
 
-| 목적 | endpoint 계열 |
+기존 프로젝트·에이전트·세션 정보를 참조하며, 실행별 중복 저장은 피한다.
+
+| 항목 | 용도 |
 |---|---|
-| trace | GET /traces, /traces/{id} |
-| 관측 | GET /observations, /observations/{id} |
-| 대화 | GET /sessions, /sessions/{id} |
-| 점수 조회 | GET /scores 또는 /v2/scores 및 상세 |
-| 점수 투영 | POST /scores |
-| 집계 | GET /metrics |
-| 기존 실험 | GET /datasets/{name}/runs 및 /runs/{runName} |
-| 실험 항목 | GET·POST /dataset-run-items |
+| runId · sessionId · agentId | 실행 목록과 세션 연결 |
+| traceId | 호출 전에 생성한 Langfuse 상세 조회 ID |
+| status · createdAt · startedAt · endedAt | 실행 상태와 목록 표시. 상태는 A2A 응답·이벤트로 갱신 |
+| taskId · contextId | A2A Task가 반환된 경우에만 저장 |
+| snapshotId | 기존 설정 스냅샷 참조. 그래프·코드 버전과 실제 적용 설정은 스냅샷에서 관리 |
 
-기존 계열은 [공식 API 목록](https://langfuse.com/faq/all/deprecated-api-migration)에 명시되어 있다. self-hosted v3에 최신 observation·metrics v2를 기본 적용하지 않는다. [호환성 표](https://langfuse.com/self-hosting/upgrade/versioning)
+Langfuse 접속 정보와 프로젝트 매핑은 플랫폼 설정에서 관리한다. 과거 매핑을 고정할 수 없을 때만 실행에 telemetryTargetId를 저장한다. 상세 관측과 조회 오류는 필요할 때 조회하며, 별도 관측 상태 저장은 기본 요구사항으로 두지 않는다.
 
-## 연결 규칙
+## SDK 연결 계약
 
-- run_id·snapshot·코드 버전·출처를 관측에 연결한다.
-- trace_id·observation_id는 run과 별도로 매핑한다.
-- 공유 trace에서는 해당 run의 관측 범위를 제한한다.
-- 업무 trace와 judge trace를 분리한다.
-- score_id와 원본 evaluation_id를 연결한다.
-- 점수 재전송은 안정적인 투영 키로 중복을 방지한다.
-- 평가 실패·제외를 숫자 점수로 투영하지 않는다.
-- 기존 LF dataset run은 필요한 경우에만 연결한다.
-- 변경 가능한 데이터 항목만 참조하여 재현성을 주장하지 않는다.
-- 정책·평가기 생성과 실행은 kpap 평가 기능이 담당한다.
+- 실행 접수 단계에서 runId와 traceId를 연결한다. 최종 응답이 유실되어도 연결할 수 있도록 한다. 선할당과 runtime binding 제안은 [구현 스펙](12-playground-observability-tech-spec.md)을 따른다.
+- 기본 단위는 실행당 trace 하나, 세션당 여러 trace다. 동일 실행의 추가 입력은 기존 run을 유지한다.
+- 각 노드 관측에 runId · nodeId · invocationId를 기록한다. 재시도는 attemptId로 구분한다.
+- 실제 적용 설정은 snapshotId로 연결한다. 요청별 설정을 격리한다.
 
-## 화면 계약
+## 화면과 한계
 
-| kpap 데이터 | 주요 필드 |
+| 화면 | 데이터 출처 |
 |---|---|
-| 관측 요약 | run·trace·수집 상태·시간·알려진 사용량/비용 |
-| 관측 구간 | id·부모·종류·시간·오류·호출/시도 ID |
-| 관측 상세 | 입력·출력·마스킹·자원·검색 출처 |
-| 평가 | 원본·출처·버전·상태·점수·근거·업무/judge trace |
-| 집계 | 조건·기간·단위·분모·미상 수·갱신 시각 |
+| 실행 목록·현재 상태 | 플랫폼 최소 실행 기록 |
+| 실시간 응답 | A2A 응답·스트림 |
+| 입력·출력·노드별 상세·사용량·비용 | Langfuse |
+| 플로우차트와 실행 표시 | GraphSpec + nodeId로 연결한 관측 |
 
-이 필드는 kpap 응답 계약이다. Langfuse 원본 필드로 가정하지 않는다. 없는 값은 미상으로 표시한다.
+Langfuse는 비동기로 수집하므로 실행 직후 상세가 없을 수 있다. 이때 “트레이스 아직 조회되지 않음”을 표시하고 다시 조회한다. 조회 오류는 별도로 표시한다.
 
-브라우저는 Langfuse 비밀키를 받지 않는다. 서버는 프로젝트 매핑·권한·마스킹·페이지·캐시를 처리한다. 상세 원문은 선택 시 조회한다.
+계측한 동작만 볼 수 있다. 관측이 없는 노드를 즉시 미실행으로 판단하지 않는다. 정확한 분기·반복 경로가 필요하면 SDK가 해당 실행 정보도 기록한다.
 
-업무 결과는 kpap·A2A 이벤트로 표시한다. 관측 지연·조회 실패는 결과를 숨기지 않는다. 404는 수집 전·삭제·매핑 오류를 대조한다. 조회 오류를 빈 데이터로 처리하지 않는다.
+취소·추가 입력·재개는 SDK 호스트가 처리한다. Langfuse는 런타임 상태나 체크포인트를 대체하지 않는다. Langfuse 데이터 삭제 시 해당 상세 이력도 조회할 수 없다.
 
-정책 대상·표본·실패 분모는 kpap에서 집계한다. Langfuse는 지원하는 비용·사용량·점수 집계에 사용한다.
+## 연동 범위와 검증
 
-## 완료 기준
+현재 대상은 self-hosted Langfuse v3다. 실제 배포 릴리스·OpenAPI는 확인이 필요하다. 기본 조회 후보는 `/api/public/traces/{id}`, `/api/public/observations`, `/api/public/sessions/{id}`이며, 배포 버전에서 응답·페이지 처리를 검증한다. 최신 v2 조회 API를 v3에 그대로 적용하지 않는다.
 
-Python·Java 실행, 업무/judge trace, score 연결을 배포 v3에서 확인한다. 지연·중복·삭제·권한·페이지·필터를 검증한다. 화면은 Langfuse 버전별 원본 응답에 직접 의존하지 않아야 한다.
+브라우저에 Langfuse 비밀키를 전달하지 않는다. kpap 서버가 기존 프로젝트 권한을 확인하고 조회한다.
+
+통합 검증은 세 가지에 집중한다.
+
+1. 동시 호출의 설정·run·trace가 섞이지 않는가.
+2. 반복·병렬·재시도 관측이 그래프 노드와 연결되는가.
+3. 관측 지연·장애 중에도 A2A 결과와 실행 목록을 표시하는가.
+
+평가 정책·실행은 기존 평가 계약을 따른다. 업무 trace와 평가 trace는 구분하고 evaluationId와 score를 연결한다.
+
+참고: [분산 트레이싱](https://langfuse.com/docs/observability/features/trace-ids-and-distributed-tracing) · [v3 비동기 수집](https://langfuse.com/self-hosting/upgrade/upgrade-guides/upgrade-v2-to-v3) · [서버·SDK 호환성](https://langfuse.com/self-hosting/upgrade/versioning)
+
+참고 아키텍처·SDK 필수 계약·버전 호환·저장 필드·조회 API는 [구현 스펙](12-playground-observability-tech-spec.md)에 정의한다.
