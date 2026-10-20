@@ -23,16 +23,16 @@ Playground가 kpap 서버를 통해 모든 A2A 호출을 시작한다. 플랫폼
 | 항목 | 용도 |
 |---|---|
 | runId · sessionId · agentId | 실행 목록과 세션 연결 |
-| traceId | Langfuse 상세 조회. 연결 전에는 비어 있을 수 있음 |
-| status · startedAt · endedAt | 실행 상태와 목록 표시. 상태는 A2A 응답·이벤트로 갱신 |
+| traceId | 호출 전에 생성한 Langfuse 상세 조회 ID |
+| status · createdAt · startedAt · endedAt | 실행 상태와 목록 표시. 상태는 A2A 응답·이벤트로 갱신 |
 | taskId · contextId | A2A Task가 반환된 경우에만 저장 |
 | snapshotId | 기존 설정 스냅샷 참조. 그래프·코드 버전과 실제 적용 설정은 스냅샷에서 관리 |
 
-Langfuse 접속 정보와 프로젝트 매핑은 플랫폼 설정에서 관리한다. 상세 관측과 조회 오류는 필요할 때 조회하며, 별도 관측 상태 저장은 기본 요구사항으로 두지 않는다.
+Langfuse 접속 정보와 프로젝트 매핑은 플랫폼 설정에서 관리한다. 과거 매핑을 고정할 수 없을 때만 실행에 telemetryTargetId를 저장한다. 상세 관측과 조회 오류는 필요할 때 조회하며, 별도 관측 상태 저장은 기본 요구사항으로 두지 않는다.
 
 ## SDK 연결 계약
 
-- 실행 접수 단계에서 runId와 traceId를 연결한다. 최종 응답이 유실되어도 연결할 수 있도록 한다. 구체적인 전달 방식은 [SDK endpoint 계약](11-sdk-endpoint-contracts.md)의 runtime_binding과 함께 확정한다.
+- 실행 접수 단계에서 runId와 traceId를 연결한다. 최종 응답이 유실되어도 연결할 수 있도록 한다. 선할당과 runtime binding 제안은 [구현 스펙](12-playground-observability-tech-spec.md)을 따른다.
 - 기본 단위는 실행당 trace 하나, 세션당 여러 trace다. 동일 실행의 추가 입력은 기존 run을 유지한다.
 - 각 노드 관측에 runId · nodeId · invocationId를 기록한다. 재시도는 attemptId로 구분한다.
 - 실제 적용 설정은 snapshotId로 연결한다. 요청별 설정을 격리한다.
@@ -67,3 +67,5 @@ Langfuse는 비동기로 수집하므로 실행 직후 상세가 없을 수 있�
 평가 정책·실행은 기존 평가 계약을 따른다. 업무 trace와 평가 trace는 구분하고 evaluationId와 score를 연결한다.
 
 참고: [분산 트레이싱](https://langfuse.com/docs/observability/features/trace-ids-and-distributed-tracing) · [v3 비동기 수집](https://langfuse.com/self-hosting/upgrade/upgrade-guides/upgrade-v2-to-v3) · [서버·SDK 호환성](https://langfuse.com/self-hosting/upgrade/versioning)
+
+참고 아키텍처·SDK 필수 계약·버전 호환·저장 필드·조회 API는 [구현 스펙](12-playground-observability-tech-spec.md)에 정의한다.
