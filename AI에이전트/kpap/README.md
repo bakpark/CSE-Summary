@@ -12,6 +12,7 @@
 
 | 문서 | 내용 |
 |---|---|
+| [관측 전용 프로토타입](prototype-observability/README.md) | Langfuse v3 공개 API 범위의 관측 UI·플로우 연계 시안 |
 | [노드 작업공간 프로토타입](prototype-node-workspace/README.md) | 핵심 화면의 노드 설정·수행·평가·이력 |
 | [프로토타입](prototype/README.md) | 모의 데이터로 설정·실행·평가 흐름 체험 |
 | [SDK endpoint 계약](11-sdk-endpoint-contracts.md) | A2A 실행·플로우차트 조회의 요청·응답·오류 |
