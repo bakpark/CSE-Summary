@@ -1,8 +1,8 @@
-# Playground pilot v17
+# Playground pilot v21
 
 검토용 / 2026-10-24. 기존 관측 시안을 실행·평가·관측을 연결하는 브라우저 프로토타입으로 갱신했다. 경로는 기존 링크를 보존하기 위해 유지한다.
 
-원본 소스 기준: `95402598bc8aee6729ecd91fabefaf53391414a2`. `dist/`와 `tests/`는 이 버전과 동일하다.
+원본 소스 기준: `f10b37f162a4cba9d0b84db42e7f1d7ddb144865`. `dist/`와 `tests/`는 이 버전과 동일하다.
 
 ## 실행
 
@@ -21,6 +21,13 @@ python3 -m http.server 8000 --directory dist
 - 반복 호출은 정확한 observation·attempt 식별자로 선택한다. 평가 근거에서 관측을 열고 원래 결과로 돌아갈 수 있다.
 
 모든 runtime·Judge·데이터셋·Langfuse 응답은 메모리의 고정 mock이다. 프롬프트나 rubric의 의미를 해석하지 않는다. 실제 에이전트에 설정을 적용하거나 운영 데이터셋에 저장하지 않는다. 새로고침하면 상태가 초기화된다. 인증 정보와 외부 API 호출은 포함하지 않는다.
+
+## v21 변경
+
+- 관측의 트리·타임라인·로그·필터·점수·메타데이터 탐색을 보강했다.
+- 중립 회색과 단일 강조색으로 팔레트를 통합했다. 장식용 왼쪽 색상 막대는 제거했다.
+- 색상은 `dist/palette.css`에서만 정의한다. 상세 규칙은 [DESIGN.md](DESIGN.md)를 따른다.
+- 실행·평가·근거 탐색·기록 재생 기능은 유지한다.
 
 ## 연동 전제
 
@@ -42,11 +49,13 @@ python3 -m http.server 8000 --directory dist
 | `dist/mock-api.js` | 고정 응답·결과 시나리오 |
 | `dist/trace-adapter.js` | v3 형태 응답 정규화 |
 | `dist/trace-replay.js` | 기록 시각 재생 |
+| `dist/trace-views.js`, `trace-inspection.js`, `trace-inspection.css` | 관측 상세 탐색 |
+| `dist/component-system.css`, `palette.css` | 공통 컴포넌트·색상 토큰 |
 | `tests/` | 모델·어댑터·탐색·재생 회귀 검사 |
 
 ## 검증
 
-Node.js v24.22.1에서 아래 검사를 실행했다. JavaScript 문법 및 56개 테스트가 통과했다.
+Node.js v24.22.1에서 아래 검사를 실행했다. JavaScript 문법 및 79개 테스트가 통과했다.
 
 ```sh
 for f in dist/*.js; do node --check "$f" || exit; done

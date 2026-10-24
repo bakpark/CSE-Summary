@@ -35,3 +35,18 @@ test('raw identity mismatch rejects; parent span never becomes a design edge; no
   assert.throws(() => adapter.normalize({ ...raw, metadata: { kpap: { runId: 'other' } } }, { run, design }), /runId/);
   assert.equal(adapter.normalize(raw, { run: { ...run, snapshotId: null }, design }).trace.design, null);
 });
+
+test('adapter preserves arbitrary native trace I/O, metadata and scoped scores without custom turns', () => {
+  const run = { runId:'r', traceId:'t', sessionId:'s', snapshotId:null };
+  const raw = {id:'t', name:'native trace', input:[{role:'user',content:'input'}], output:{nested:{zero:0,flag:false},array:[1,2]}, metadata:{custom:{deep:'kept'}}, userId:'u',environment:'test',tags:['native'],release:'r2',version:'v3',latency:0,totalCost:0,scores:[{id:'score',traceId:'t',observationId:null,value:0}],observations:[]};
+  const trace = adapter.normalize(raw,{run}).trace;
+  assert.deepEqual(trace.input,raw.input);assert.deepEqual(trace.output,raw.output);assert.deepEqual(trace.metadata,raw.metadata);assert.deepEqual(trace.scores,raw.scores);
+  assert.equal(trace.cost,0);assert.equal(trace.latency,0);assert.equal(trace.userId,'u');assert.deepEqual(trace.turns,[]);assert.equal(trace.design,null);
+  raw.output.nested.zero=99;assert.equal(trace.output.nested.zero,0);
+});
+test('adapter preserves model/usage/cost details and WARNING separately from completion', () => {
+  const run={runId:'r',traceId:'t',sessionId:'s',snapshotId:null};
+  const observation={id:'o',traceId:'t',type:'GENERATION',startTime:'2026-10-24T00:00:00Z',endTime:'2026-10-24T00:00:01Z',completionStartTime:'2026-10-24T00:00:00.200Z',level:'WARNING',statusMessage:'retry',model:'test-model',modelParameters:{temperature:0},usageDetails:{total:0},costDetails:{total:0},calculatedTotalCost:0,metadata:{custom:'keep'}};
+  const result=adapter.normalize({id:'t',observations:[observation]},{run}).observations[0];
+  assert.equal(result.level,'WARNING');assert.equal(result.status,'completed');assert.equal(result.model,'test-model');assert.equal(result.modelParameters.temperature,0);assert.equal(result.cost,0);assert.equal(result.usageDetails.total,0);assert.equal(result.metadata.custom,'keep');assert.equal(result.completionStartTime,observation.completionStartTime);
+});

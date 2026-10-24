@@ -15,7 +15,7 @@ function setup({ reduced = false, mobile = false } = {}) {
     document: { getElementById: get, activeElement: get('tab-execute'), body: { style: {} }, addEventListener() {} }, location: { hash: '' },
     window: { scrollY: 0, scrollTo({ top }) { this.scrollY = top; }, history: { pushState() {}, replaceState() {} }, addEventListener() {}, getComputedStyle() { return { gridTemplateColumns: '270px 700px' }; }, matchMedia(query) { return { matches: query.includes('reduced-motion') ? reduced : mobile, addEventListener(type, fn) { mediaListeners[query] = fn; } }; } } };
   vm.createContext(context); const run = text => vm.runInContext(text, context);
-  for (const file of ['pilot-model.js', 'trace-adapter.js', 'mock-api.js', 'trace-replay.js', 'pilot.js']) run(fs.readFileSync(path.join(__dirname, '../dist', file), 'utf8'));
+  for (const file of ['pilot-model.js', 'trace-adapter.js', 'mock-api.js', 'trace-replay.js', 'trace-views.js', 'trace-inspection.js', 'pilot.js']) run(fs.readFileSync(path.join(__dirname, '../dist', file), 'utf8'));
   return { run, get, animations, setReduced(value) { reduced = value; mediaListeners['(prefers-reduced-motion: reduce)']?.(); } };
 }
 async function evaluated(ui, scenario = 'repeated') {
@@ -113,7 +113,7 @@ test('compact evaluation hides explanation by default but keeps important issues
 test('evaluation home exposes usable definitions, datasets and target; create/edit validation preserves history', async () => {
   const ui = setup(); ui.run("navigate('evaluate')");
   assert.equal(ui.run('S.evalPage'), 'home');
-  for (const text of ['평가 정의', '데이터셋 관리', '기존 Judge 관리', '실행 대상', '아직 실행한 평가가 없습니다']) assert.ok(ui.get('app').innerHTML.includes(text));
+  for (const text of ['평가 정의', '데이터셋 관리', '기존 Judge 관리', '실행 대상', '실행 이력이 없습니다']) assert.ok(ui.get('app').innerHTML.includes(text));
   ui.run('definitionModal();storeDefinition()'); assert.ok(ui.get('definition-error').innerHTML.includes('이름'));
   ui.run("S.definitionDraft.name='금액 검증';S.definitionDraft.criteria=['amount'];storeDefinition()"); assert.equal(ui.run('selectedDefinition().name'), '금액 검증');
   ui.run("selectDataset('payment-samples');saveDraft()"); await ui.run('compare()');
@@ -154,7 +154,7 @@ test('historical run detail never mixes current unsaved candidate preparation or
 test('evaluation launch order is dataset then definition then execution, including DOM keyboard order', () => {
   const ui = setup(); ui.run("navigate('evaluate')");
   const markup = ui.get('app').innerHTML, launch = markup.slice(markup.indexOf('class="launch-grid"'), markup.indexOf('class="launch-footer"'));
-  assert.ok(markup.includes('데이터셋 → 정의 → 실행'));
+  assert.ok(markup.includes('id="launch-heading">평가 준비'));
   assert.ok(launch.indexOf('id="dataset-select"') < launch.indexOf('id="definition-select"'));
   assert.ok(launch.indexOf('id="definition-select"') < launch.indexOf('id="edit-candidate"'));
   assert.match(launch, /<span>01<\/span><h3>데이터셋<\/h3>/);
@@ -241,4 +241,64 @@ test('reference-style flow wrapper keeps node editing and trace navigation ident
   ui.run("setTraceNav('flow')");
   assert.ok(ui.get('app').innerHTML.includes('trace-nav-inner flow-view'));
   assert.equal(ui.run('S.observationId'), selected);
+});
+
+async function richTrace(ui) {
+  ui.run("navigate('trace')");await ui.run('loadRuns()');await ui.run("openRun('run-sample-observability')");
+  while(ui.run('!!S.traceData.nextCursor')) await ui.run('loadSelectedRun(true)');
+}
+test('restored native trace root shows structured I/O with no node or turn dependency', async () => {
+  const ui=setup();ui.run("navigate('trace')");await ui.run("selectRunSession('session-sdk')");await ui.run("openRun('run-sample-legacy')");
+  assert.equal(ui.run('S.traceData.design'),null);assert.equal(ui.run('S.traceData.turns.length'),0);
+  ui.run('selectTraceRoot()');assert.equal(ui.run('S.traceScope'),'trace');assert.equal(ui.run('S.selectedNodeId'),null);assert.ok(ui.get('app').innerHTML.includes('&quot;received&quot;: true'));
+  ui.run("setTraceFormat('formatted')");assert.ok(ui.get('app').innerHTML.includes('payload-object'));assert.ok(ui.get('app').innerHTML.includes('native-sdk'));
+  assert.equal((ui.get('app').innerHTML.match(/id="record-output"/g)||[]).length,1);
+});
+test('tree filters retain ancestors and selected detail; exact ID survives mode and filter changes', async () => {
+  const ui=setup();await richTrace(ui);assert.equal(ui.run('S.traceNav'),'tree');
+  const target=ui.run('S.traceData.observations[3].id');ui.run(`selectObservation('${target}')`);ui.get('record-output').scrollTop=73;
+  ui.run("setObservationFilter('level','ERROR')");assert.equal(ui.run('S.observationId'),target);assert.ok(ui.get('trace-nav-content').innerHTML.includes('상위 문맥'));assert.ok(ui.get('trace-filter-status').innerHTML.includes('선택 관측은 필터 밖'));
+  ui.run("setObservationFilter('query','no-such-record')");assert.ok(ui.get('trace-nav-content').innerHTML.includes('일치하는 관측이 없습니다'));assert.equal(ui.run('S.observationId'),target);
+  ui.run("clearObservationFilters();setTraceNav('timeline');setTraceNav('calls');setTraceNav('tree')");assert.equal(ui.run('S.observationId'),target);assert.equal(ui.get('record-output').scrollTop,73);
+});
+test('metadata, exact metrics and scores retain trace/observation/session attribution', async () => {
+  const ui=setup();await richTrace(ui);ui.run('selectTraceRoot();setTraceInspectView("scores")');
+  assert.ok(ui.get('app').innerHTML.includes('response_quality'));assert.ok(ui.get('app').innerHTML.includes('세션 범위 점수'));assert.ok(!ui.get('app').innerHTML.includes('tool_result_valid'));
+  ui.run('selectObservation(S.traceData.observations[3].id)');assert.ok(ui.get('app').innerHTML.includes('tool_result_valid'));assert.ok(!ui.get('app').innerHTML.includes('response_quality'));assert.ok(!ui.get('app').innerHTML.includes('session_review'));
+  ui.run('selectObservation(S.traceData.observations[1].id);setTraceInspectView("metadata")');const html=ui.get('app').innerHTML;
+  assert.ok(html.includes('temperature'));assert.ok(html.includes('원본 metadata'));assert.ok(html.includes('0.24s'));assert.ok(html.includes('356 tok'));
+  ui.run('selectObservation(S.traceData.observations[2].id);setTraceInspectView("io")');assert.ok(ui.get('app').innerHTML.includes('TimeoutError'));assert.ok(ui.get('app').innerHTML.includes('관측 오류'));
+});
+test('formatted messages escape content and preserve raw-pane scroll separately by format', async () => {
+  const ui=setup();await richTrace(ui);ui.run('selectObservation(S.traceData.observations[1].id)');ui.get('record-output').scrollTop=64;
+  ui.run("setTraceFormat('formatted')");assert.equal(ui.get('record-output').scrollTop,0);assert.ok(ui.get('app').innerHTML.includes('payload-message'));ui.get('record-output').scrollTop=22;
+  ui.run("setTraceFormat('json')");assert.equal(ui.get('record-output').scrollTop,64);ui.run("setTraceFormat('formatted')");assert.equal(ui.get('record-output').scrollTop,22);
+  assert.ok(ui.run("formattedTraceValue({unsafe:'<img src=x onerror=alert(1)>'})").includes('&lt;img'));
+});
+test('chronological log opens exact observation and same-session action uses only KPAP list', async () => {
+  const ui=setup();await richTrace(ui);ui.run('selectTraceRoot();setTraceInspectView("log")');const html=ui.get('app').innerHTML;
+  const ids=ui.run('S.traceData.observations.map(o=>o.id)');assert.ok(html.indexOf(`id="log-${ids[0]}"`)<html.indexOf(`id="log-${ids[5]}"`));
+  ui.run(`selectObservation('${ids[2]}')`);assert.equal(ui.run('TraceTools.view'),'io');assert.equal(ui.run('S.observationId'),ids[2]);
+  const calls=ui.run('MockAPI.adapterStats.langfuseRequests');await ui.run('showSameSessionRuns()');assert.equal(ui.run('S.tracePage'),'list');assert.equal(ui.run('S.runList.sessionId'),'session-payments');assert.equal(ui.run('MockAPI.adapterStats.langfuseRequests'),calls);
+});
+test('partial observation paging keeps active filter and trace-root scope, no guessed total cost', async () => {
+  const ui=setup();ui.run("navigate('trace')");await ui.run('loadRuns()');await ui.run("openRun('run-sample-observability')");
+  ui.run('selectTraceRoot();setTraceInspectView("metadata");setObservationFilter("level","ERROR")');assert.equal(ui.run('S.traceData.observations.length'),2);
+  await ui.run('loadSelectedRun(true)');assert.equal(ui.run('S.traceScope'),'trace');assert.equal(ui.run('TraceTools.level'),'ERROR');assert.equal(ui.run('TraceTools.view'),'metadata');assert.equal(ui.run('S.traceData.cost'),null);
+  assert.ok(ui.get('app').innerHTML.includes('상위 문맥'));assert.equal(ui.run('TraceViews.metrics(S.traceData.observations[0]).cost'),.00031);
+});
+
+test('same-session navigation cancels pending detail fetch without late selection theft', async () => {
+  const ui=setup();await richTrace(ui);const pending=ui.run('loadSelectedRun()');await ui.run('showSameSessionRuns()');await pending;
+  assert.equal(ui.run('S.tracePage'),'list');assert.equal(ui.run('S.loading'),null);assert.equal(ui.run('S.runList.sessionId'),'session-payments');assert.equal(ui.run('document.activeElement.id'),'run-session');
+});
+
+test('graphless replay opens exact native observation without inventing a missing citation', async () => {
+  const ui=setup();ui.run("navigate('trace')");await ui.run("selectRunSession('session-sdk')");await ui.run("openRun('run-sample-legacy')");
+  ui.run('selectTraceRoot();replayStep(1)');assert.equal(ui.run('S.traceScope'),'observation');assert.equal(ui.run('S.selectedNodeId'),null);assert.ok(ui.get('trace-inspector').innerHTML.includes('입출력'));assert.ok(!ui.get('trace-inspector').innerHTML.includes('인용된 턴을 찾을 수 없습니다'));
+  ui.run('selectTraceRoot();toggleReplay();Replay.pause()');assert.equal(ui.run('S.traceScope'),'observation');assert.equal(ui.run('S.evidenceContext'),null);
+});
+test('same unmapped exact observation remains the cited record after manual inspector switch', async () => {
+  const ui=setup();await evaluated(ui,'unmapped');await ui.run("openEvidence(S.selectedEvaluationId,0,'b')");const cited=ui.run('S.observationId');assert.equal(ui.run('S.traceScope'),'conversation');
+  ui.run(`selectObservation('${cited}')`);assert.equal(ui.run('S.traceScope'),'observation');assert.equal(ui.run('isCitedSelection()'),true);assert.equal(ui.run('S.selectedNodeId'),null);
 });

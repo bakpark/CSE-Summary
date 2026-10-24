@@ -69,9 +69,23 @@
   const adapterStats = { langfuseRequests: 0 };
   function seedRun(key, sessionId, status, minute, mode = 'available', repeated = false) {
     const trace = makeTrace(key, baseline, true, repeated); trace.sessionId = sessionId;
-    if (mode === 'legacy') { trace.design = null; trace.observations.forEach(o => { o.ownerNodeId = null; o.nodeId = null; o.nodeExecutionId = null; }); }
+    if (mode === 'legacy') { trace.turns = []; trace.rawOutput = { message: trace.text, channel: 'native-sdk', nested: { received: true } }; trace.design = null; trace.observations.forEach(o => { o.ownerNodeId = null; o.nodeId = null; o.nodeExecutionId = null; }); }
     if (mode === 'untimed') { trace.observations.forEach(o => { o.missingTime = true; }); }
     if (mode === 'replay') { trace.observations.forEach((o, i) => { o.nodeExecutionId = `invocation-${key}-${i + 1}`; o.startOffset = [0, 1000, 4500][i]; o.endOffset = [3000, 4000, 6500][i]; }); trace.observations[2].predecessorInvocationIds = trace.observations.slice(0, 2).map(o => o.nodeExecutionId); }
+    if (mode === 'observability') {
+      const rootId = hexId(`${key}-root`,16), id = suffix => hexId(`${key}-${suffix}`,16);
+      const row = (suffix, fields) => ({ id:id(suffix), nodeId:null, ownerNodeId:null, nodeExecutionId:null, kind:'span', name:suffix, operation:suffix, attempt:1, status:'completed', turnId:trace.turns[0].id, input:null, output:null, parentId:rootId, ...fields });
+      trace.input = [{ role:'user', content:fixture.input }]; trace.rawOutput = { answer:trace.text, total:50000, currency:'KRW', source:'payments.search' };
+      trace.observations = [
+        row('root',{id:rootId,name:'CS agent request',operation:'agent.request',parentId:null,startOffset:0,endOffset:6100,cost:.00031,usage:{input:420,output:102,total:522,unit:'TOKENS'},input:trace.input,output:trace.rawOutput}),
+        row('intent',{name:'요청 의도 분석',operation:baseline.model,kind:'generation',ownerNodeId:'node_payment_query',nodeExecutionId:'inspect-intent',startOffset:50,endOffset:800,input:[{role:'system',content:'요청의 기간과 취소 제외 조건을 분류합니다.'},{role:'user',content:fixture.input}],output:{month:'2026-10',exclude_cancelled:true},usage:{input:296,output:60,total:356,unit:'TOKENS'},cost:.000194}),
+        row('tool-1',{name:'결제 내역 조회',operation:'payments.search',kind:'tool',ownerNodeId:'node_payment_query',nodeExecutionId:'inspect-tool-1',startOffset:950,endOffset:2300,status:'error',statusMessage:'TimeoutError: payment-service 응답 시간 초과',input:{month:'2026-10',exclude_cancelled:true},output:null}),
+        row('tool-2',{name:'결제 내역 조회',operation:'payments.search',kind:'tool',ownerNodeId:'node_payment_query',nodeExecutionId:'inspect-tool-2',attempt:2,startOffset:2400,endOffset:3800,level:'WARNING',statusMessage:'재시도 후 정상 응답',input:{month:'2026-10',exclude_cancelled:true},output:{payments:fixture.payments.slice(0,2),total:50000},cost:0}),
+        row('answer',{name:'답변 생성',operation:baseline.model,kind:'generation',ownerNodeId:'node_answer',nodeExecutionId:'inspect-answer',startOffset:4000,endOffset:5800,predecessorInvocationIds:['inspect-tool-2'],input:[{role:'tool',content:'{\"total\":50000}'},{role:'user',content:fixture.input}],output:{text:trace.text},cost:.000116}),
+        row('event',{name:'응답 전달',operation:'response.sent',kind:'event',level:'DEBUG',parentId:rootId,startOffset:5900,endOffset:5900,input:{event:'response.sent'},output:{status:'recorded'}})
+      ];
+      trace.scores = [{id:'score-trace-quality',traceId:trace.traceId,observationId:null,name:'response_quality',value:.9,dataType:'NUMERIC',source:'API',comment:'Mock 예시 · 이 Trace 전체 응답 점수'}, {id:'score-tool',traceId:trace.traceId,observationId:id('tool-2'),name:'tool_result_valid',value:1,dataType:'BOOLEAN',source:'API',comment:'Mock 예시 · 두 번째 도구 호출에 직접 연결'}, {id:'score-session',traceId:null,observationId:null,sessionId,name:'session_review',stringValue:'검토 필요',dataType:'CATEGORICAL',source:'ANNOTATION'}];
+    }
     if (mode === 'empty') { trace.observations = []; trace.turns = []; trace.input = null; trace.text = null; }
     if (mode === 'partial') { trace.observations = trace.observations.slice(0, 1); trace.observations[0].status = 'running'; trace.observations[0].output = null; trace.text = null; trace.turns[0].output = null; }
     if (status === 'failed') { trace.observations[0].status = 'error'; trace.observations[0].statusMessage = '결제 서비스 응답 시간 초과'; trace.observations[0].output = null; }
@@ -79,6 +93,7 @@
     registerRun(trace, { sessionId, status, createdAt: `2026-10-24T07:${minute}:00Z`, startedAt: `2026-10-24T07:${minute}:00Z`, endedAt: ['running', 'unknown'].includes(status) ? null : `2026-10-24T07:${minute}:03Z`, remoteState: key === 'sample-unknown' ? 'unknown' : null, snapshotId: mode === 'legacy' ? null : baseline.id });
     traceModes.set(trace.id, mode);
   }
+  seedRun('sample-observability', 'session-payments', 'completed', '10', 'observability');
   seedRun('sample-replay', 'session-payments', 'completed', '09', 'replay', true);
   seedRun('sample-untimed', 'session-sdk', 'completed', '00', 'untimed');
   seedRun('sample-retry', 'session-payments', 'completed', '08', 'available', true);
@@ -104,10 +119,10 @@
   function publicTrace(trace, run) {
     const common = { runId: run.runId, snapshotId: run.snapshotId, graphVersion: trace.design?.id || null, codeVersion: 'sdk-mock-1', fixtureVersion: trace.fixtureVersion, turns: trace.turns };
     const start = Date.parse(run.startedAt || run.createdAt);
-    return { id: run.traceId, sessionId: run.sessionId, timestamp: run.createdAt, name: 'CS 에이전트', input: trace.input, output: trace.text, metadata: { kpap: common }, observations: trace.observations.map((o, index) => {
+    return { id: run.traceId, sessionId: run.sessionId, timestamp: run.createdAt, name: 'CS 에이전트', userId: 'user-masked-demo', environment: 'playground', tags: ['payment','mock'], release: 'sdk-mock-1', version: '1', input: trace.input, output: trace.rawOutput ?? trace.text, metadata: { service: 'payment-assistant', region: 'mock-region', kpap: common }, observations: trace.observations.map((o, index) => {
       const time = o.missingTime ? null : new Date(start + (o.startOffset ?? index * 1200)).toISOString();
-      return { id: o.id, traceId: run.traceId, parentObservationId: index ? trace.observations[0].id : null, type: o.kind === 'generation' ? 'GENERATION' : 'SPAN', name: o.name, startTime: time, endTime: o.status === 'running' || o.missingTime ? null : new Date(start + (o.endOffset ?? index * 1200 + 1200)).toISOString(), level: o.status === 'error' ? 'ERROR' : 'DEFAULT', statusMessage: o.statusMessage || null, model: o.kind === 'generation' ? trace.snapshot.model : null, input: clone(o.input), output: clone(o.output), usage: o.kind === 'generation' ? { input: 124, output: 42, total: 166, unit: 'TOKENS' } : null, calculatedTotalCost: o.kind === 'generation' ? 0.000116 : null, metadata: { kpap: { ...common, nodeId: o.ownerNodeId, invocationId: o.nodeExecutionId, logicalCallId: o.kind === 'tool' ? `${run.runId}-payments` : null, attemptId: o.kind === 'tool' ? `attempt-${o.attempt}` : null, predecessorInvocationIds: o.predecessorInvocationIds || [], attempt: o.attempt, turnId: o.turnId, kind: o.kind, resourceId: o.operation } } };
-    }), scores: [] };
+      return { id: o.id, traceId: run.traceId, parentObservationId: Object.hasOwn(o,'parentId') ? o.parentId : index ? trace.observations[0].id : null, type: o.kind === 'generation' ? 'GENERATION' : o.kind === 'event' ? 'EVENT' : 'SPAN', name: o.name, startTime: time, endTime: o.status === 'running' || o.missingTime ? null : new Date(start + (o.endOffset ?? index * 1200 + 1200)).toISOString(), level: o.status === 'error' ? 'ERROR' : o.level || 'DEFAULT', statusMessage: o.statusMessage || null, model: o.kind === 'generation' ? trace.snapshot.model : null, modelParameters: o.kind === 'generation' ? { temperature: .2, max_tokens: 512 } : null, completionStartTime: o.kind === 'generation' && time ? new Date(Date.parse(time)+240).toISOString() : null, input: clone(o.input), output: clone(o.output), usage: o.usage || (o.kind === 'generation' ? { input: 124, output: 42, total: 166, unit: 'TOKENS' } : null), usageDetails: o.kind === 'generation' ? { input: o.usage?.input ?? 124, output: o.usage?.output ?? 42, total: o.usage?.total ?? 166 } : null, costDetails: o.kind === 'generation' ? { total: o.cost ?? .000116 } : null, calculatedTotalCost: o.cost ?? (o.kind === 'generation' ? 0.000116 : null), metadata: { service: o.kind === 'tool' ? 'payment-service' : 'agent-sdk', requestId: `mock-${o.id}`, kpap: { ...common, nodeId: o.ownerNodeId, invocationId: o.nodeExecutionId, logicalCallId: o.kind === 'tool' ? `${run.runId}-payments` : null, attemptId: o.kind === 'tool' ? `attempt-${o.attempt}` : null, predecessorInvocationIds: o.predecessorInvocationIds || [], attempt: o.attempt, turnId: o.turnId, kind: o.kind, resourceId: o.operation } } };
+    }), scores: clone(trace.scores || []) };
   }
   async function getRunTrace({ agentId = 'agent-cs', runId, cursor = null, all = false, observationId = null }, options = {}) {
     const run = runs.get(runId); if (!run || run.agentId !== agentId) throw TraceAdapter.error('RUN_NOT_FOUND', 404, '플랫폼 실행 기록을 찾을 수 없습니다.');

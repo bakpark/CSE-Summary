@@ -1,0 +1,23 @@
+/* The only literal colors in the application. User-approved neutral + one accent.
+   Error/warning are reserved for actual status text/icons, never whole cards. */
+:root {
+  --surface: #ffffff;
+  --surface-soft: #f7f7f7;
+  --surface-muted: #f2f2f2;
+  --surface-selected: #e9e9e9;
+  --line: #dddddd;
+  --line-strong: #b5b5b5;
+  --muted: #666666;
+  --ink-soft: #454545;
+  --ink: #242424;
+  --accent: #255ed4;
+  --error: #a12d35;
+  --warning: #765416;
+  --scrim: color-mix(in srgb, var(--ink) 24%, transparent);
+  --shadow: color-mix(in srgb, var(--ink) 12%, transparent);
+  --bg: var(--surface-soft);
+  /* Legacy semantic hooks remain API-compatible; success/type are neutral. */
+  --green: var(--ink-soft);
+  --purple: var(--ink-soft);
+  --red: var(--error);
+}

@@ -11,13 +11,14 @@ test('reference workbench keeps stable application anchors and one honest fixed 
   }
   assert.ok(html.indexOf('trace-replay.js') < html.indexOf('pilot.js'));
 });
-test('reference theme preserves semantic text contrast and reduced-motion escape', () => {
+test('reference layout uses current user-approved palette and preserves reduced-motion escape', () => {
   const css = read('reference-theme.css');
   const lum = hex => {
     const values = hex.match(/[\da-f]{2}/gi).map(v => parseInt(v, 16) / 255).map(v => v <= .04045 ? v / 12.92 : ((v + .055) / 1.055) ** 2.4);
     return values[0] * .2126 + values[1] * .7152 + values[2] * .0722;
   };
-  for (const [text, surface] of [['346671', 'edf6f8'], ['8c4f59', 'fcf1f2'], ['3e6f5d', 'edf7f1'], ['657080', 'ffffff'], ['ffffff', '3567b3']]) {
+  const tokens = Object.fromEntries([...read('palette.css').matchAll(/--([\w-]+):\s*#([\da-f]{6});/g)].map(m=>[m[1],m[2]]));
+  for (const [text, surface] of [[tokens.ink,tokens.surface],[tokens.muted,tokens.surface],[tokens.ink,tokens['surface-selected']],[tokens.surface,tokens.accent]]) {
     const [a,b] = [lum(text),lum(surface)].sort((a,b) => b-a);
     assert.ok((a + .05) / (b + .05) >= 4.5, `${text}/${surface} must be readable`);
   }
