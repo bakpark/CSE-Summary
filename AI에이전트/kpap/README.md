@@ -12,6 +12,7 @@
 
 | 문서 | 내용 |
 |---|---|
+| [도구 번들링·개별 Mock 전환](14-toolset-bundling-architecture.md) | 버전형 Toolset·설명 overlay·SDK/Gateway 대안·호출 흐름 |
 | [SDK 실행 아키텍처·연동 명세](13-sdk-runtime-architecture.md) | SDK 경계·LangGraph native 비교·HTTP/API·DB·재개/취소/복구 설계 |
 | [Playground pilot v21](prototype-observability/README.md) | 실행·평가·관측·기록 재생을 연결하는 mock 프로토타입 |
 | [노드 작업공간 프로토타입](prototype-node-workspace/README.md) | 핵심 화면의 노드 설정·수행·평가·이력 |
@@ -40,4 +41,5 @@
 ## 그래프 조회·A2A 설정 확장
 
 [SDK 그래프·A2A 규약](../agentic%20platform/kpap-graph-minimal-contract.md)에 endpoint, Agent Card 확장, 네 설정의 타입과 검증 규칙을 정리했다. [SDK 연동 데모](https://kpap-node-workspace.justgecko33.chatgpt.site/sdk.html)는 응답 기반 그래프 표시와 요청·적용값 검증을 제공한다. 실제 원격 실행은 연결하지 않았다.
+
 

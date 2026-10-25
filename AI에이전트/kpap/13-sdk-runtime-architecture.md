@@ -580,3 +580,6 @@ for name in architecture lifecycle; do
   dot -Tsvg "assets/runtime-architecture/$name.dot" -o "assets/runtime-architecture/$name.svg"
 done
 ```
+
+도구별 live/mock 전환·설명 overlay·Toolset 배포 대안은 [도구 번들링 설계](14-toolset-bundling-architecture.md)에 정리한다. 별도 검토 제안이며 기존 wire 계약을 자동 변경하지 않는다.
+
