@@ -280,20 +280,34 @@ Task를 반환하는 호스트는 상태 조회를 제공한다. 후속 메서�
 
 유효한 JSON-RPC 요청의 KPAP 설정 검증 오류는 다음 형식을 사용한다. HTTP 인증 실패는 401/403으로 처리한다. A2A 표준 오류는 표준 코드 매핑을 유지한다.
 
+2026-10-25 정정: 기존 단일 객체 형태의 error.data를 A2A 1.0 typed detail 배열로 수정했다. 각 항목에는 @type이 필요하다. KPAP 내부 오류 DTO를 그대로 직렬화하지 않는다. 아래 domain=kpap은 제안 예시이며 운영 도메인은 구현 시 합의한다. 근거: [A2A 1.0 §9.5](https://a2a-protocol.org/v1.0.0/specification/#95-error-handling).
+
 ```json
 {
-  "jsonrpc": "2.0", "id": "rpc-1",
+  "jsonrpc": "2.0",
+  "id": "rpc-1",
   "error": {
     "code": -32602,
     "message": "KPAP 설정 검증 실패",
-    "data": {
-      "code": "GRAPH_VERSION_MISMATCH",
-      "requestId": "req-1",
-      "fieldErrors": [{
-        "path": "params.metadata.kpap.graphVersion",
-        "message": "현재 그래프 버전을 다시 조회하세요."
-      }]
-    }
+    "data": [
+      {
+        "@type": "type.googleapis.com/google.rpc.ErrorInfo",
+        "reason": "GRAPH_VERSION_MISMATCH",
+        "domain": "kpap",
+        "metadata": {
+          "requestId": "req-1"
+        }
+      },
+      {
+        "@type": "type.googleapis.com/google.rpc.BadRequest",
+        "fieldViolations": [
+          {
+            "field": "params.metadata.kpap.graphVersion",
+            "description": "현재 그래프 버전을 다시 조회하세요."
+          }
+        ]
+      }
+    ]
   }
 }
 ```
@@ -329,3 +343,4 @@ Task를 반환하는 호스트는 상태 조회를 제공한다. 후속 메서�
 - [그래프·A2A 공통 규약](../agentic%20platform/kpap-graph-minimal-contract.md): KPAP 자체 설정·스키마·검증 원본.
 - [SDK 요구사항](01-sdk-spec.md): 서비스 내부 SDK 인터페이스.
 - [전체 그래프 예제](prototype-node-workspace/dist/fixtures/support-agent.graph.json): 분기 및 네 설정.
+

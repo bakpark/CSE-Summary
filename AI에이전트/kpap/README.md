@@ -1,6 +1,6 @@
 # kpap 상세 기획
 
-검토용 v0.3 / 수정일: 2026-10-13.
+검토용 문서 모음 / 수정일: 2026-10-25.
 
 목표는 외부 에이전트의 설정·실행·관측·평가를 연결하는 것이다. 기존 플랫폼 기능을 재사용한다. API·타입은 개발 제안이다.
 
@@ -12,6 +12,7 @@
 
 | 문서 | 내용 |
 |---|---|
+| [SDK 실행 아키텍처·연동 명세](13-sdk-runtime-architecture.md) | SDK 경계·LangGraph native 비교·HTTP/API·DB·재개/취소/복구 설계 |
 | [Playground pilot v21](prototype-observability/README.md) | 실행·평가·관측·기록 재생을 연결하는 mock 프로토타입 |
 | [노드 작업공간 프로토타입](prototype-node-workspace/README.md) | 핵심 화면의 노드 설정·수행·평가·이력 |
 | [프로토타입](prototype/README.md) | 모의 데이터로 설정·실행·평가 흐름 체험 |
@@ -28,6 +29,8 @@
 | [온라인 규칙](05-online-evaluation.md) | 정책·표본·비용·비동기 평가 |
 | [체크리스트](06-planning-checklist.md) | 미확정 사항·검증 |
 
+신규 실행 아키텍처는 설계 제안이다. 추가 API·스키마는 배포되지 않았으며 SQL은 실행하지 않았다. Agent Server는 선택 대안이다.
+
 ## 개발 순서
 
 공통 계약 확정 → 대표 SDK 실행 → Playground 호출·관측 → 오프라인 평가·Plugin → 온라인 평가.
@@ -37,3 +40,4 @@
 ## 그래프 조회·A2A 설정 확장
 
 [SDK 그래프·A2A 규약](../agentic%20platform/kpap-graph-minimal-contract.md)에 endpoint, Agent Card 확장, 네 설정의 타입과 검증 규칙을 정리했다. [SDK 연동 데모](https://kpap-node-workspace.justgecko33.chatgpt.site/sdk.html)는 응답 기반 그래프 표시와 요청·적용값 검증을 제공한다. 실제 원격 실행은 연결하지 않았다.
+

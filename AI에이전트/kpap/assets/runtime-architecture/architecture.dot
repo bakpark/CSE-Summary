@@ -1,0 +1,33 @@
+digraph Architecture {
+ graph [rankdir=TB, bgcolor="white", pad="0.25", nodesep="0.35", ranksep="0.55", fontname="Noto Sans CJK KR", label="KPAP control plane / External runtime / Observation", labelloc=t, fontsize=20];
+ node [shape=box, style="rounded,filled", fontname="Noto Sans CJK KR", fontsize=14, fillcolor="#f3f6fa", color="#8796aa", margin="0.18,0.12"];
+ edge [fontname="Noto Sans CJK KR", fontsize=12, color="#52647c", arrowsize=.7];
+ browser [label="Browser\nChat + Graph + Evaluation",fillcolor="#e8f1ff"];
+ subgraph cluster_platform {
+ label="KPAP platform"; color="#40648b"; style=rounded;
+ api [label="KPAP API\nAuth / Policy / Runs"];
+ db [label="Existing platform DB\nRun summary / Registry / Snapshot"];
+ delivery [label="Optional delivery worker\nOutbox / A2A status reconcile"];
+ api -> db [label="scoped SQL",dir=both];
+ db -> delivery [label="command ref"];
+ }
+ subgraph cluster_runtime {
+ label="External agent host"; color="#73865b"; style=rounded;
+ host [label="A2A host adapter\nService auth / Binding"];
+ sdk [label="KPAP SDK facade\nBind / Resume / Resource adapters"];
+ hoststore [label="Host durable store + Checkpointer\nTask binding / Thread state"];
+ lg [label="LangGraph native runtime\nState / Loop / Interrupt"];
+ res [label="Approved resources\nModels / Tools / Retrieval"];
+ host -> sdk [label="start / resume / cancel"];
+ sdk -> hoststore [label="CAS / pinned snapshot ref",dir=both];
+ sdk -> lg [label="invoke / Command(resume)\nRuntime context"];
+ lg -> res [label="managed bindings",dir=both];
+ }
+ lf [label="Langfuse v3\nObservations / I-O / usage",fillcolor="#fff1df"];
+ browser -> api [label="user auth",dir=both];
+ api -> host [label="A2A + signed binding",dir=both];
+ delivery -> host [label="deliver / reconcile",style=dashed];
+ sdk -> api [label="snapshot service API",style=dashed];
+ sdk -> lf [label="async OTLP"];
+ api -> lf [label="public REST",dir=both];
+}

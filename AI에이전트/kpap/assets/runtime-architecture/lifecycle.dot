@@ -1,0 +1,20 @@
+digraph Lifecycle {
+ graph [rankdir=TB,bgcolor=white,pad=.2,ranksep=.45,nodesep=.3];
+ node [shape=box,style="rounded,filled",fillcolor="#f3f6fa",color="#8796aa",fontname="Noto Sans CJK KR",fontsize=12,margin=".15,.1"];
+ edge [fontname="Noto Sans CJK KR",fontsize=10,color="#52647c"];
+ accept [label="1. KPAP accepts request\nAuth + graph version + idempotency"];
+ commit [label="2. Local platform transaction\nRun + command/outbox references"];
+ bind [label="3. External host accepts once\nVerify binding + canonical snapshot"];
+ run [label="4. SDK starts LangGraph\nRuntime context + durable thread"];
+ wait [label="5a. Interrupt\nCheckpoint → waiting_input record"];
+ resume [label="6a. Resume CAS\nSame snapshot + same thread"];
+ done [label="5b. Terminal result\nHost task state is authoritative"];
+ projection [label="7. KPAP reconciles summary\nA2A GetTask / verified events"];
+ trace [label="8. Observation viewed separately\nLangfuse may still be delayed",fillcolor="#fff1df"];
+ accept -> commit -> bind -> run;
+ run -> wait -> resume -> run;
+ run -> done -> projection -> trace;
+ unknown [label="Transport loss\nremote_state = unknown",fillcolor="#fff1df"];
+ commit -> unknown [style=dashed,label="delivery uncertain"];
+ unknown -> projection [style=dashed,label="query; no blind replay"];
+}
